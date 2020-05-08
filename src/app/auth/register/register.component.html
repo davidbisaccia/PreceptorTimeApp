@@ -1,0 +1,35 @@
+<form [formGroup]="registerForm" (ngSubmit)="onCreateAccount()"> 
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" formControlName="name" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="title">Title/Position</label>
+        <input type="text" id="title" formControlName="title" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="accountType">Account Type</label>
+        <select class="form-control" formControlName="accountType">
+            <option value="student">Student</option>
+            <option value="resident">Resident</option>
+            <option value="preceptor">Preceptor</option>
+            <option value="admin">Administrator</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="username">User Name</label>
+        <input type="text" id="username" formControlName="username" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" formControlName="password" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" formControlName="confirmPassword" class="form-control">
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit" [disabled]="!registerForm.valid">Create Account</button>
+        <button class="btn btn-primary" type="button" (click)="navigateToSignIn()">Back to Sign In</button>
+    </div>  
+</form>

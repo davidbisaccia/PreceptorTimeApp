@@ -1,0 +1,14 @@
+<form [formGroup]="signInForm" (ngSubmit)="onLogIn()"> 
+    <div class="form-group">
+        <label for="username">User Name</label>
+        <input type="text" id="username" formControlName="username" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" formControlName="password" class="form-control">
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit" [disabled]="!signInForm.valid">Log In</button>
+        <button class="btn btn-primary" type="button" (click)="navigateToRegister()">Sign Up</button>
+    </div>  
+</form>
