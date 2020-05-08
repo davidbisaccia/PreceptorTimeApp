@@ -2,10 +2,16 @@
     <div class="form-group">
         <label for="name">Name</label>
         <input type="text" id="name" formControlName="name" class="form-control">
+        <span *ngIf="!registerForm.get('name').valid &&registerForm.get('name').touched" class="help-block">
+            Please enter a valid name (minimum 6 characters, max 50)
+        </span>
     </div>
     <div class="form-group">
         <label for="title">Title/Position</label>
         <input type="text" id="title" formControlName="title" class="form-control">
+        <span *ngIf="!registerForm.get('title').valid &&registerForm.get('title').touched" class="help-block">
+            Please include your title or area of study for learners 
+        </span>
     </div>
     <div class="form-group">
         <label for="accountType">Account Type</label>
@@ -19,14 +25,34 @@
     <div class="form-group">
         <label for="username">User Name</label>
         <input type="text" id="username" formControlName="username" class="form-control">
+        <span *ngIf="!registerForm.get('username').valid &&registerForm.get('username').touched" class="help-block">
+            Please enter a valid name (minimum 6 characters, max 32)
+        </span>
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" formControlName="email" class="form-control">
+        <span *ngIf="!registerForm.get('email').valid &&registerForm.get('email').touched" class="help-block">
+            Please enter a valid email
+        </span>
     </div>
     <div class="form-group">
         <label for="password">Password</label>
         <input type="password" id="password" formControlName="password" class="form-control">
+        <span *ngIf="!registerForm.get('password').valid &&registerForm.get('password').touched" class="help-block">
+            Please enter a valid password (minimum 6 characters)
+        </span>
     </div>
     <div class="form-group">
         <label for="confirmPassword">Confirm Password</label>
         <input type="password" id="confirmPassword" formControlName="confirmPassword" class="form-control">
+         <!-- [errorStateMatcher]="matcher"> -->
+        <span *ngIf="!registerForm.get('confirmPassword').valid &&registerForm.get('confirmPassword').touched" class="help-block">
+            Please enter a valid password (minimum 6 characters)
+        </span>
+        <span *ngIf="registerForm.hasError('notSame')" class="help-block">
+            Passwords do not match
+        </span>
     </div>
     <div class="form-group">
         <button class="btn btn-primary" type="submit" [disabled]="!registerForm.valid">Create Account</button>
