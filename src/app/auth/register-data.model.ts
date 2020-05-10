@@ -1,4 +1,4 @@
-export class registerData{
+export class RegisterData{
     constructor(){}
     
     name: string;

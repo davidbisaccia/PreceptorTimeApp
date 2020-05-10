@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormGroupDirective, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { registerData } from '../shared/registerData.model'
+import { RegisterData } from '../register-data.model'
+import { AuthService } from '../auth.service';
 
 export class MyErrorStateMatcher implements MyErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -21,8 +22,10 @@ export class RegisterComponent implements OnInit {
 
   matcher = new MyErrorStateMatcher();
   registerForm: FormGroup;
+  isLoading: boolean = false;
+  errorMsg: string = null;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private auth: AuthService) { }
 
   //name, email, account type, password, token, title
 
@@ -40,25 +43,40 @@ export class RegisterComponent implements OnInit {
 
   onCreateAccount(){
     let data = this.formInputToRegisterData();
-    
+    this.errorMsg = null;
+    this.isLoading = true;
+
+    this.auth.registerAccount(data).subscribe(
+        responseData => {
+        console.log(responseData);
+        this.isLoading = false;
+        this.router.navigate(['/time']);
+        //sub.unsubscribe();
+      },
+      errorMessage => {
+        this.errorMsg = errorMessage;
+        //this.showErrorAlert(errorMessage);
+        this.isLoading = false;
+        //sub.unsubscribe();
+      });
   }
 
   handleRegistrationError(error: Error){
     //TODO: Depends on web service return values for errors
   }
 
-  private formInputToRegisterData() : registerData{
+  private formInputToRegisterData() : RegisterData{
     if(!this.registerForm.valid){
       return null;
     }
 
-    let reg = new registerData();
+    let reg = new RegisterData();
     reg.accountType = this.registerForm.get('accountType').value;
     reg.email = this.registerForm.get('email').value;
     reg.name = this.registerForm.get('name').value;
     reg.password = this.registerForm.get('password').value;
     reg.title = this.registerForm.get('title').value;
-    reg.userName = this.registerForm.get('userName').value;
+    reg.userName = this.registerForm.get('username').value;
     
     return reg;
   }

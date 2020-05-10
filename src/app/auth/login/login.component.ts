@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -10,8 +11,10 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   signInForm: FormGroup;
+  isLoading: boolean = false;
+  errorMsg: string = null;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private auth: AuthService) { }
 
   ngOnInit(): void {
     this.signInForm = new FormGroup({
@@ -21,7 +24,26 @@ export class LoginComponent implements OnInit {
   }
 
   onLogIn(){
-    //TODO:
+    //handle the result of signing in or signin up
+    const user = this.signInForm.get('username').value;
+    const pass = this.signInForm.get('password').value;
+    
+    this.errorMsg = null;
+    this.isLoading = true;
+    
+    const sub = this.auth.logIn(user, pass).subscribe(
+      responseData => {
+        //console.log(responseData);
+        this.isLoading = false;
+        this.router.navigate(['/time']);
+        //sub.unsubscribe();
+      },
+      errorMessage => {
+        this.errorMsg = errorMessage;
+        //this.showErrorAlert(errorMessage);
+        this.isLoading = false;
+        //sub.unsubscribe();
+      });
   }
 
   navigateToRegister(){
