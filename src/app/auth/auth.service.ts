@@ -27,7 +27,7 @@ export class AuthService {
       setTimeout(() => {
         obs.next([fakeResp]);
         obs.complete();
-      }, 500);
+      }, 1500);
       
     });
 

@@ -1,0 +1,12 @@
+.dark {
+    background-color: #222;
+    color: #DDD
+}
+
+.mid {
+    background-color: #666;
+    color: #DDD;
+    font-weight: bold;
+    font: 'arial';
+    font-size: 16px;
+}

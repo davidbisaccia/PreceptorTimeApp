@@ -1,0 +1,39 @@
+<div *ngIf="isLoading" style="text-align: center">
+    <app-loading-spinner></app-loading-spinner>
+</div>
+
+<table class="table dark" width="100%">
+    <thead class="mid">
+        <tr>
+            <td *ngIf="!isPreceptor">Preceptor</td>
+            <td *ngIf="!isLearner">Student</td>
+            <td>Rotation</td>
+            <td>Date</td>
+            <td>Time</td>
+            <td colspan="3">Notes</td>
+            <td *ngIf="isPreceptor"></td>
+            <td *ngIf="isPreceptor"></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let entry of timeEntries">
+            <td *ngIf="!isPreceptor">{{entry.preceptor}}</td>
+            <td *ngIf="!isLearner">{{entry.student}}</td>
+            <td>{{entry.rotation}}</td>
+            <td>{{entry.date.toLocaleDateString()}}</td>
+            <td>{{entry.hours}} hour{{entry.hours > 1 ? 's' : ''}}</td>
+            <td colspan="3">{{entry.notes.substring(0, 200)}}</td>
+            <td *ngIf="isPreceptor">
+                <button class="btn btn-success" type="button" (click)="onEditEntry(entry)">
+                    <span class="glyphicon glyphicon-pencil"></span>
+
+                </button>
+            </td>
+            <td *ngIf="isPreceptor">
+                <button class="btn btn-danger" type="button" (click)="onDeleteEntry(entry.id)">
+                    <span class="glyphicon glyphicon-remove-sign"></span>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
