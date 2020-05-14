@@ -2,17 +2,18 @@
     <app-loading-spinner></app-loading-spinner>
 </div>
 
+<app-time-edit-box [entry]="selectedEditEntry" (close)="handleUpdatedEntry($event)" *ngIf="selectedEditEntry"></app-time-edit-box>
 <table class="table dark" width="100%">
     <thead class="mid">
         <tr>
-            <td *ngIf="!isPreceptor">Preceptor</td>
-            <td *ngIf="!isLearner">Student</td>
+            <td  *ngIf="!isPreceptor">Preceptor</td>
+            <td  *ngIf="!isLearner">Student</td>
             <td>Rotation</td>
             <td>Date</td>
             <td>Time</td>
-            <td colspan="3">Notes</td>
-            <td *ngIf="isPreceptor"></td>
-            <td *ngIf="isPreceptor"></td>
+            <td>Notes</td>
+            <td class="mid" *ngIf="isPreceptor"></td>
+            <td class="mid" *ngIf="isPreceptor"></td>
         </tr>
     </thead>
     <tbody>

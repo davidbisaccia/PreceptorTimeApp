@@ -9,6 +9,7 @@ import { TimeComponent } from './time/time/time.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TimeEntryTableComponent } from './time/time-entry-table/time-entry-table.component';
 import { SharedModule } from './shared/shared.module';
+import { TimeEditBoxComponent } from './time/time-edit-box/time-edit-box.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { SharedModule } from './shared/shared.module';
     HeaderComponent,
     TimeComponent,
     TimeEntryTableComponent,
+    TimeEditBoxComponent,
   ],
   imports: [
     BrowserModule,

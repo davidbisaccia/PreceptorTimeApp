@@ -18,6 +18,8 @@ export class TimeEntryTableComponent implements OnInit, OnDestroy {
   userSub: Subscription;
   loadFailure: boolean =  false;
 
+  selectedEditEntry: TimeEntry = null;
+
   constructor(private auth: AuthService, private timeService: TimeService) { }
 
   ngOnInit(): void {
@@ -54,23 +56,29 @@ export class TimeEntryTableComponent implements OnInit, OnDestroy {
   }
 
   onEditEntry(entry: TimeEntry){
+    this.selectedEditEntry = entry;
+  }
+
+  handleUpdatedEntry(entry: TimeEntry){
+    //this is important, and will close the edit item
+    this.selectedEditEntry = null;
+    console.log('handleUpdatedEntry');
+    console.log(entry);
+
+    if(entry === null) return;
+
     this.isLoading = true;
-    //TODO: pop up edit form from here
-    // this.timeService.editTimeEntry(entry).subscribe(
-    //   success => {
-    //     if(success){
-    //       this.timeEntries = this.timeEntries.filter((value, index, arr) => value.id === id);
-    //       this.isLoading = false;
-    //     }
-    //     else
-    //     {
-    //       this.isLoading = false;
-    //       console.log('Todo show error message box here')
-    //     }
-    //   }, error => {
-    //     this.isLoading = false;
-    //     console.log('Todo show error message box here');
-    // });
+    console.log(this.timeEntries.map((val, idx, arr) => val.id));
+    let index = this.timeEntries.findIndex((val, idx, arr) => val.id === entry.id);
+    if(index === -1){
+      //new entry
+      this.timeEntries.unshift(entry);
+    }
+    else {
+      this.timeEntries[index] = entry;
+    }
+
+    this.isLoading = false;
   }
 
   onDeleteEntry(id: number){

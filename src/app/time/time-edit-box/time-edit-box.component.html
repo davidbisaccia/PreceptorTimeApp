@@ -1,0 +1,63 @@
+<div class="backdrop"></div>
+<div class="alert-box">
+    
+    <h2 class="title">Edit Entry</h2>
+    <br>
+
+    
+    <span class="close-btn glyphicon glyphicon-remove" (click)="onClose(null)"></span>
+
+    <form [formGroup]="editTimeEntryForm"> 
+        <div class="form-group">
+            <label for="preceptor">Preceptor</label>
+            <input type="text" id="preceptor" formControlName="preceptor" class="form-control" disabled>
+            <span *ngIf="!editTimeEntryForm.get('preceptor').valid && editTimeEntryForm.get('preceptor').touched" class="help-block">
+                Preceptor is required
+            </span>
+        </div>
+
+        <div class="form-group">
+            <label for="student">Student</label>
+            <input type="text" id="student" formControlName="student" class="form-control" disabled>
+            <span *ngIf="!editTimeEntryForm.get('student').valid && editTimeEntryForm.get('student').touched" class="help-block">
+                Student is required
+            </span>
+        </div>
+
+        <div class="form-group">
+            <label for="rotation">Rotation</label>
+            <input type="text" id="rotation" formControlName="rotation" class="form-control">
+            <span *ngIf="!editTimeEntryForm.get('rotation').valid && editTimeEntryForm.get('rotation').touched" class="help-block">
+                Rotation is required
+            </span>
+        </div>
+
+        <div class="form-group">
+            <label for="hours">Hour(s)</label>
+            <input type="number" id="hours" formControlName="hours" class="form-control">
+            <span *ngIf="!editTimeEntryForm.get('hours').valid && editTimeEntryForm.get('hours').touched" class="help-block">
+                Hours is required
+            </span>
+        </div>
+
+        <div class="form-group">
+            <label for="date">Date</label>
+            <input type="date" id="date" formControlName="date" class="form-control">
+            <span *ngIf="!editTimeEntryForm.get('date').valid && editTimeEntryForm.get('date').touched" class="help-block">
+                Date is required
+            </span>
+        </div>
+
+        <div class="form-group">
+            <label for="notes">Notes</label>
+            <textarea name="notes" id="notes" formControlName="notes" class="form-control" cols="50" rows="3"></textarea>
+            <!-- <input type="text" id="notes" formControlName="notes" class="form-control"> -->
+        </div>
+
+        <br>
+        <div class="alert-box-actions">
+            <button class="btn btn-success" type="button" (click)="onUpdate()">Update</button>
+            <button class="btn btn-primary" type="button" (click)="onClose(null)">Cancel</button>
+        </div> 
+    </form>
+</div>
