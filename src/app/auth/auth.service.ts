@@ -20,9 +20,9 @@ export class AuthService {
   //TODO: this is just a test setup for now, need to do the real deal when we pick back end
   logIn(email: string, password: string): Observable<User> {
     //defaulting to admin for now....
-    let fakeResp = {email: email, userId: '1', accountType: 'admin', idToken: '1', expiresIn: '3600'};
+    let fakeResp = {email: email, userId: '1', displayName: 'Professor', accountType: 'admin', idToken: '1', expiresIn: '3600'};
 
-    this.handleAuthentication(fakeResp.email, fakeResp.accountType, fakeResp.userId, fakeResp.idToken, +fakeResp.expiresIn);
+    this.handleAuthentication(fakeResp.email, fakeResp.accountType, fakeResp.userId, fakeResp.displayName, fakeResp.idToken, +fakeResp.expiresIn);
     let fakeObservable = Observable.create(obs => {
       setTimeout(() => {
         obs.next([fakeResp]);
@@ -50,9 +50,9 @@ export class AuthService {
   registerAccount(data: RegisterData): Observable<User>{
     //TODO: in the future make this real, when we setup the back end, we will to use handleError like the login stuff above when we are ready
 
-    let fakeResp = {email: data.userName, userId: '1', accountType: data.accountType, idToken: '1', expiresIn: '3600'};
+    let fakeResp = {email: data.userName, userId: '1', displayName: 'Register-Professor', accountType: data.accountType, idToken: '1', expiresIn: '3600'};
 
-    this.handleAuthentication(fakeResp.email, fakeResp.accountType, fakeResp.userId, fakeResp.idToken, +fakeResp.expiresIn);
+    this.handleAuthentication(fakeResp.email, fakeResp.accountType, fakeResp.userId, fakeResp.displayName, fakeResp.idToken, +fakeResp.expiresIn);
     let fakeObservable = Observable.create(obs => {
       setTimeout(() =>
       {
@@ -90,10 +90,10 @@ export class AuthService {
     }
   }
 
-  private handleAuthentication(email: string, accountType: string, userId: string, token: string, expiresIn: number){
+  private handleAuthentication(email: string, accountType: string, userId: string, displayName: string, token: string, expiresIn: number){
     const expirationDate = new Date(new Date().getTime() + (expiresIn * 1000));
     console.log('handleAuth ' + accountType);
-    const user = new User(email, userId, accountType, token, expirationDate);
+    const user = new User(email, userId, displayName, accountType, token, expirationDate);
 
     this.userSub.next(user);
     //store for auto re-login latter
@@ -125,6 +125,7 @@ export class AuthService {
       email: string,
       id: string,
       accountType: string,
+      displayName: string,
       _token: string,
       _tokenExpirationDate: Date
     } = JSON.parse(localStorage.getItem('userData'));
@@ -134,7 +135,7 @@ export class AuthService {
     }
 
     const date = new Date(userData._tokenExpirationDate)
-    const loadedUser = new User(userData.email, userData.id, userData.accountType, userData._token, date);
+    const loadedUser = new User(userData.email, userData.id, userData.displayName, userData.accountType, userData._token, date);
     //make sure token is still valid
     if(loadedUser.token){
       this.userSub.next(loadedUser);

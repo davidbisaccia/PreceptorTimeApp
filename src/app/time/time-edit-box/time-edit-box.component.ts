@@ -4,6 +4,7 @@ import { TimeEntry } from '../model/time-entry.model';
 import { TimeService } from '../time.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Subscription } from 'rxjs';
+import { map, take } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -15,9 +16,9 @@ export class TimeEditBoxComponent implements OnInit, OnDestroy {
 
   @Output() close = new EventEmitter<TimeEntry>();
   @Input() entry: TimeEntry;
+  @Input() userDisplayName: string;
   isEditMode : boolean;
   editEntryId : number = -1;
-  userId: string;
   editTimeEntryForm: FormGroup;
   isBusy: boolean = false;
   errorMsg: string = null;
@@ -27,23 +28,22 @@ export class TimeEditBoxComponent implements OnInit, OnDestroy {
   constructor(private timeService: TimeService, private auth: AuthService) { }
 
   ngOnInit(): void {
-    this.userSub = this.auth.userSub.subscribe(user => {
-      this.userId = user.id;
-    });
-
-
-    this.isEditMode = this.entry !== null;
+    console.log(this.userDisplayName);
+    
     this.editEntryId = this.entry ? this.entry.id : -1;
+    this.isEditMode = this.editEntryId !== -1;
+    let preceptorName = this.isEditMode && this.entry ? this.entry.preceptor : this.userDisplayName; 
 
-    let dp = new DatePipe(navigator.language);
+    console.log(preceptorName);
+    let dp = new DatePipe(navigator.language); 
     let p = 'y-MM-dd'; // YYYY-MM-DD
 
     this.editTimeEntryForm = new FormGroup({
-      'preceptor': new FormControl(this.entry ? this.entry.preceptor : null, [Validators.required]),
+      'preceptor': new FormControl(preceptorName, [Validators.required]),
       'student': new FormControl(this.entry ? this.entry.student : null, [Validators.required]),
       'rotation': new FormControl(this.entry ? this.entry.rotation : null, [Validators.required]),
       'hours': new FormControl(this.entry ? this.entry.hours : null, [Validators.required, Validators.min(1), Validators.max(24)]),
-      'date': new FormControl(this.entry ? dp.transform(this.entry.date, p) : new Date(), [Validators.required]),
+      'date': new FormControl(this.entry ? dp.transform(this.entry.date, p) : dp.transform(new Date(), p), [Validators.required]),
       'notes': new FormControl(this.entry ? this.entry.notes : null),
     });
   }
@@ -63,7 +63,7 @@ export class TimeEditBoxComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.userSub.unsubscribe();
+    // this.userSub.unsubscribe();
   }
 
   //TODO: handle and add
@@ -71,12 +71,39 @@ export class TimeEditBoxComponent implements OnInit, OnDestroy {
     this.errorMsg = null;
 
     if(this.isEditMode){
-      this.isBusy = true;
+      this.handleUpdateTimeEntry();
+    }
+    else{
+      this.handleNewTimeEntry();
+    }
+
+  }
+
+  private handleNewTimeEntry(){
+    this.isBusy = true;
+    let newEntry = this.getFormData();
+    this.timeService.addTimeEntry(newEntry).subscribe(id => {
+      if(id > 0){
+        this.isBusy = false;
+        newEntry.id = id;
+        this.onClose(newEntry);
+      }
+      else {
+        this.errorMsg = 'An error occurred when submitting the new entry, please try again.';
+          this.isBusy = false;
+      }
+    }, error => {
+      this.errorMsg = error.message;
+      this.isBusy = false;
+    });
+  }
+
+  private handleUpdateTimeEntry(){
+    this.isBusy = true;
       let updatedEntry = this.getFormData();
       this.timeService.editTimeEntry(updatedEntry).subscribe(success => {
         if(success){
           this.isBusy = false;
-          console.log('onUpdate');
           this.onClose(updatedEntry);
         }
         else{
@@ -87,7 +114,6 @@ export class TimeEditBoxComponent implements OnInit, OnDestroy {
           this.errorMsg = error.message;
           this.isBusy = false;
       });
-    }
   }
 
   onClose(entry: TimeEntry){

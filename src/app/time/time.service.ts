@@ -92,14 +92,15 @@ export class TimeService {
     return fakeObservable;
   }
 
-  addTimeEntry(entry: TimeEntry): Observable<boolean>{
+  addTimeEntry(entry: TimeEntry): Observable<number>{
     let nextId = this.fakeTimeEntries.length + 1;
     entry.id = nextId;
     this.fakeTimeEntries.push(entry);
 
+    //will return -1 when it fails or throw an error in the future for the real thing
     let fakeObservable = Observable.create(obs => {
       setTimeout(() => {
-        obs.next(true);
+        obs.next(nextId);
         obs.complete();
       }, 700);
     });

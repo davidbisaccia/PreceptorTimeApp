@@ -17,6 +17,7 @@ export class TimeEntryTableComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   userSub: Subscription;
   loadFailure: boolean =  false;
+  userDisplayName: string = null;
 
   selectedEditEntry: TimeEntry = null;
 
@@ -28,10 +29,12 @@ export class TimeEntryTableComponent implements OnInit, OnDestroy {
       if(user === null){
         this.isPreceptor = false;
         this.isLearner = false;
+        this.userDisplayName = null;
         this.timeEntries = [];
         return;
       }
       
+      this.userDisplayName = user.displayName;
       this.isLearner = user.isLearner;
       this.isPreceptor = user.isPreceptor || user.isAdmin;
       let getMethod = this.isLearner ? this.timeService.getLearnerTimeEntries(+user.id) : this.timeService.getPreceptorTimeEntries(+user.id);
@@ -55,6 +58,12 @@ export class TimeEntryTableComponent implements OnInit, OnDestroy {
     this.userSub.unsubscribe();
   }
 
+  onAddEntry(){
+    let t = new TimeEntry();
+    t.id = -1;
+    this.selectedEditEntry = t;
+  }  
+
   onEditEntry(entry: TimeEntry){
     this.selectedEditEntry = entry;
   }
@@ -68,7 +77,7 @@ export class TimeEntryTableComponent implements OnInit, OnDestroy {
     if(entry === null) return;
 
     this.isLoading = true;
-    console.log(this.timeEntries.map((val, idx, arr) => val.id));
+    //console.log(this.timeEntries.map((val, idx, arr) => val.id));
     let index = this.timeEntries.findIndex((val, idx, arr) => val.id === entry.id);
     if(index === -1){
       //new entry

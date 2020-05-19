@@ -21,18 +21,6 @@
     border-radius: 8px;
 }
 
-/* .close-btn-border{
-    position: fixed;
-    top: 14vh;
-    left: 79vw;
-    z-index: 101;
-    border-radius: 50%;
-    background-color: #FFF;
-    height: 40px !important;
-    padding-top: 10px;
-    width: 40px !important;
-} */
-
 .close-btn{
     position: fixed;
     top: 14vh;
@@ -49,7 +37,7 @@
 }
 
 .close-btn:hover{
-    cursor: pointer;
+    cursor: pointer; 
 }
 
 .title {

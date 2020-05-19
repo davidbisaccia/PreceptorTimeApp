@@ -2,18 +2,22 @@
     <app-loading-spinner></app-loading-spinner>
 </div>
 
-<app-time-edit-box [entry]="selectedEditEntry" (close)="handleUpdatedEntry($event)" *ngIf="selectedEditEntry"></app-time-edit-box>
+<app-time-edit-box [entry]="selectedEditEntry" [userDisplayName]="userDisplayName" (close)="handleUpdatedEntry($event)" *ngIf="selectedEditEntry"></app-time-edit-box>
 <table class="table dark" width="100%">
     <thead class="mid">
         <tr>
-            <td  *ngIf="!isPreceptor">Preceptor</td>
-            <td  *ngIf="!isLearner">Student</td>
-            <td>Rotation</td>
-            <td>Date</td>
-            <td>Time</td>
-            <td>Notes</td>
-            <td class="mid" *ngIf="isPreceptor"></td>
-            <td class="mid" *ngIf="isPreceptor"></td>
+            <th *ngIf="!isPreceptor">Preceptor</th>
+            <th *ngIf="!isLearner">Student</th>
+            <th>Rotation</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th colspan="3">Notes</th>
+            <th *ngIf="isPreceptor"></th>
+            <th *ngIf="isPreceptor">
+                <button class="btn btn-success" type="button" (click)="onAddEntry()">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -25,7 +29,7 @@
             <td>{{entry.hours}} hour{{entry.hours > 1 ? 's' : ''}}</td>
             <td colspan="3">{{entry.notes.substring(0, 200)}}</td>
             <td *ngIf="isPreceptor">
-                <button class="btn btn-success" type="button" (click)="onEditEntry(entry)">
+                <button class="btn btn-primary" type="button" (click)="onEditEntry(entry)">
                     <span class="glyphicon glyphicon-pencil"></span>
 
                 </button>
