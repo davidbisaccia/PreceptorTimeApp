@@ -1,11 +1,12 @@
 import { Component, OnInit, Output, EventEmitter, Input, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { TimeEntry } from '../model/time-entry.model';
+import { TimeEntryDisplay } from '../model/time-entry.model';
 import { TimeService } from '../time.service';
-import { AuthService } from 'src/app/auth/auth.service';
 import { Subscription } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
+import { UserDataStorageService } from 'src/app/shared/user-data-storage.service';
+import { UserInfo } from 'src/app/shared/userInfo.model';
 
 @Component({
   selector: 'app-time-edit-box',
@@ -14,33 +15,40 @@ import { DatePipe } from '@angular/common';
 })
 export class TimeEditBoxComponent implements OnInit, OnDestroy {
 
-  @Output() close = new EventEmitter<TimeEntry>();
-  @Input() entry: TimeEntry;
+  @Output() close = new EventEmitter<TimeEntryDisplay>();
+  @Input() entry: TimeEntryDisplay;
+  @Input() students: UserInfo[]
   @Input() userDisplayName: string;
-  isEditMode : boolean;
+  isEditMode : boolean = true;
   editEntryId : number = -1;
   editTimeEntryForm: FormGroup;
   isBusy: boolean = false;
   errorMsg: string = null;
+  preceptorId: number = -1;
 
   userSub : Subscription;
 
-  constructor(private timeService: TimeService, private auth: AuthService) { }
+  constructor(private timeService: TimeService, private userService: UserDataStorageService) { }
 
   ngOnInit(): void {
-    console.log(this.userDisplayName);
-    
+    //the un-editables
     this.editEntryId = this.entry ? this.entry.id : -1;
+    this.preceptorId = this.entry.preceptorId;
+
+    console.log(this.isEditMode);
     this.isEditMode = this.editEntryId !== -1;
-    let preceptorName = this.isEditMode && this.entry ? this.entry.preceptor : this.userDisplayName; 
+    let preceptorName = this.isEditMode && this.entry ? this.entry.preceptorDisplayName : this.userDisplayName; 
 
     console.log(preceptorName);
     let dp = new DatePipe(navigator.language); 
     let p = 'y-MM-dd'; // YYYY-MM-DD
+    
+    let studentDisplay = this.entry ? (this.entry.studentDisplayName) : null;
+    let foundStudent = this.students.find((v, i, arr) => v.displayName === studentDisplay);
 
     this.editTimeEntryForm = new FormGroup({
-      'preceptor': new FormControl(preceptorName, [Validators.required]),
-      'student': new FormControl(this.entry ? this.entry.student : null, [Validators.required]),
+      'preceptor': new FormControl({value: preceptorName, disabled: true}, [Validators.required]),
+      'student': new FormControl({value: foundStudent ? foundStudent.id : null, disabled: this.isEditMode}, [Validators.required]),
       'rotation': new FormControl(this.entry ? this.entry.rotation : null, [Validators.required]),
       'hours': new FormControl(this.entry ? this.entry.hours : null, [Validators.required, Validators.min(1), Validators.max(24)]),
       'date': new FormControl(this.entry ? dp.transform(this.entry.date, p) : dp.transform(new Date(), p), [Validators.required]),
@@ -48,12 +56,18 @@ export class TimeEditBoxComponent implements OnInit, OnDestroy {
     });
   }
 
-  getFormData(): TimeEntry{
-    let timeEntry = new TimeEntry();
+  getFormData(): TimeEntryDisplay{
+    let timeEntry = new TimeEntryDisplay();
 
     timeEntry.id = this.editEntryId;
-    timeEntry.preceptor = this.editTimeEntryForm.get('preceptor').value;
-    timeEntry.student = this.editTimeEntryForm.get('student').value;
+    timeEntry.preceptorId = this.preceptorId;
+    timeEntry.preceptorDisplayName = this.editTimeEntryForm.get('preceptor').value;
+    
+    let studentId = +this.editTimeEntryForm.get('student').value;
+    let foundStudent = this.students.find((v, i, arr) => v.id === studentId);
+    timeEntry.studentDisplayName = foundStudent.displayName;
+    timeEntry.studentId = studentId;
+    
     timeEntry.rotation = this.editTimeEntryForm.get('rotation').value;
     timeEntry.hours = this.editTimeEntryForm.get('hours').value;
     timeEntry.date = new Date(this.editTimeEntryForm.get('date').value);
@@ -116,7 +130,7 @@ export class TimeEditBoxComponent implements OnInit, OnDestroy {
       });
   }
 
-  onClose(entry: TimeEntry){
+  onClose(entry: TimeEntryDisplay){
     this.errorMsg = null;
     this.close.emit(entry);
   }

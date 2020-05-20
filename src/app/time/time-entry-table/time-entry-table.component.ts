@@ -1,8 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { TimeEntry } from '../model/time-entry.model';
+import { TimeEntryDisplay } from '../model/time-entry.model';
 import { AuthService } from 'src/app/auth/auth.service';
 import { TimeService } from '../time.service';
 import { Subscription } from 'rxjs';
+import { UserDataStorageService } from 'src/app/shared/user-data-storage.service';
+import { UserInfo } from 'src/app/shared/userInfo.model';
 
 @Component({
   selector: 'app-time-entry-table',
@@ -11,7 +13,7 @@ import { Subscription } from 'rxjs';
 })
 export class TimeEntryTableComponent implements OnInit, OnDestroy {
 
-  timeEntries: TimeEntry[];
+  timeEntries: TimeEntryDisplay[];
   isLearner: boolean;
   isPreceptor: boolean;
   isLoading: boolean = false;
@@ -19,9 +21,10 @@ export class TimeEntryTableComponent implements OnInit, OnDestroy {
   loadFailure: boolean =  false;
   userDisplayName: string = null;
 
-  selectedEditEntry: TimeEntry = null;
+  selectedEditEntry: TimeEntryDisplay = null;
+  students: UserInfo[] = [];
 
-  constructor(private auth: AuthService, private timeService: TimeService) { }
+  constructor(private auth: AuthService, private timeService: TimeService, private userService: UserDataStorageService) { }
 
   ngOnInit(): void {
     this.userSub = this.auth.userSub.subscribe(user => {
@@ -33,6 +36,14 @@ export class TimeEntryTableComponent implements OnInit, OnDestroy {
         this.timeEntries = [];
         return;
       }
+
+    //todo: unsubscribe?
+    this.userService.getLearners().subscribe(learners => {
+      this.students = learners;
+      console.log(this.students);
+    }, error => {
+        //todo
+    });
       
       this.userDisplayName = user.displayName;
       this.isLearner = user.isLearner;
@@ -58,17 +69,20 @@ export class TimeEntryTableComponent implements OnInit, OnDestroy {
     this.userSub.unsubscribe();
   }
 
+  //add button
   onAddEntry(){
-    let t = new TimeEntry();
+    let t = new TimeEntryDisplay();
     t.id = -1;
     this.selectedEditEntry = t;
   }  
 
-  onEditEntry(entry: TimeEntry){
+  //edit button
+  onEditEntry(entry: TimeEntryDisplay){
     this.selectedEditEntry = entry;
   }
 
-  handleUpdatedEntry(entry: TimeEntry){
+  //return data from edit button event
+  handleUpdatedEntry(entry: TimeEntryDisplay){
     //this is important, and will close the edit item
     this.selectedEditEntry = null;
     console.log('handleUpdatedEntry');
@@ -90,6 +104,7 @@ export class TimeEntryTableComponent implements OnInit, OnDestroy {
     this.isLoading = false;
   }
 
+  //delete button
   onDeleteEntry(id: number){
     this.isLoading = true;
     this.timeService.deleteTimeEntry(id).subscribe(

@@ -15,7 +15,7 @@ export class User{
     }
 
     get isPreceptor(): boolean {
-        return this.accountType === 'preceptor';
+        return this.accountType === 'preceptor' || this.isAdmin;
     }
 
     get isAdmin(): boolean{

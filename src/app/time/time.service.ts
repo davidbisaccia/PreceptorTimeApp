@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TimeEntry } from './model/time-entry.model';
+import { TimeEntryDisplay } from './model/time-entry.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -7,54 +7,65 @@ import { Observable } from 'rxjs';
 })
 export class TimeService {
 
-  private fakeTimeEntries: TimeEntry[] = [];
+  private fakeTimeEntries: TimeEntryDisplay[] = [];
 
-
-  constructor() {
-    const t1 = new TimeEntry();
+  private setupFakeDataForTestingWithNoBackend(){
+    const t1 = new TimeEntryDisplay();
     t1.id = 1;
     t1.date = new Date();
     t1.hours = 2;
     t1.notes ='notes';
-    t1.preceptor = 'dave';
+    t1.preceptorDisplayName = 'dave';
+    t1.preceptorId = 1;
     t1.rotation = 'GI';
-    t1.student = 'me';
+    t1.studentDisplayName = 'me';
+    t1.studentId = 2;
 
-    const t2 = new TimeEntry();
+    const t2 = new TimeEntryDisplay();
     t2.id = 2;
     t2.date = new Date();
     t2.hours = 5;
     t2.notes ='notes asdsadas dasd sad asd asd ';
-    t2.preceptor = 'Brad';
+    t2.preceptorDisplayName = 'Brad';
+    t2.preceptorId = 3;
     t2.rotation = 'Endo';
-    t2.student = 'me';
+    t2.studentDisplayName = 'me';
+    t2.studentId = 2;
 
     this.fakeTimeEntries.push(t1);
     this.fakeTimeEntries.push(t2);
 
-    const t3 = new TimeEntry();
+    const t3 = new TimeEntryDisplay();
     t3.id = 3;
     t3.date = new Date();
     t3.hours = 2;
     t3.notes ='notes';
-    t3.preceptor = 'MECEPTOR';
+    t3.preceptorDisplayName = 'MECEPTOR';
+    t3.preceptorId = 4;
     t3.rotation = 'GI';
-    t3.student = 'peeps';
+    t3.studentDisplayName = 'peeps';
+    t3.studentId = 5;
 
-    const t4= new TimeEntry();
+    const t4= new TimeEntryDisplay();
     t4.id = 4;
     t4.date = new Date();
     t4.hours = 5;
     t4.notes ='notes asdsadas dasd sad asd asd ';
-    t4.preceptor = 'MECEPTOR';
+    t4.preceptorDisplayName = 'MECEPTOR';
+    t4.preceptorId = 4;
     t4.rotation = 'Endo';
-    t4.student = 'other peeps';
+    t4.studentDisplayName = 'other peeps';
+    t4.studentId = 6;
 
     this.fakeTimeEntries.push(t3);
     this.fakeTimeEntries.push(t4);
-   }
+  }
 
-  getPreceptorTimeEntries(id: number): Observable<TimeEntry[]>{
+  constructor() {
+    this.setupFakeDataForTestingWithNoBackend();
+  }
+
+  getPreceptorTimeEntries(id: number): Observable<TimeEntryDisplay[]>{
     let fakeObservable = Observable.create(obs => {
       setTimeout(() => {
         obs.next(this.fakeTimeEntries.slice());
@@ -65,7 +76,7 @@ export class TimeService {
     return fakeObservable;
   }
 
-  getLearnerTimeEntries(id: number): Observable<TimeEntry[]>{
+  getLearnerTimeEntries(id: number): Observable<TimeEntryDisplay[]>{
     let fakeObservable = Observable.create(obs => {
       setTimeout(() => {
         obs.next(this.fakeTimeEntries.slice());
@@ -92,7 +103,7 @@ export class TimeService {
     return fakeObservable;
   }
 
-  addTimeEntry(entry: TimeEntry): Observable<number>{
+  addTimeEntry(entry: TimeEntryDisplay): Observable<number>{
     let nextId = this.fakeTimeEntries.length + 1;
     entry.id = nextId;
     this.fakeTimeEntries.push(entry);
@@ -108,7 +119,8 @@ export class TimeService {
     return fakeObservable;
   }
 
-  editTimeEntry(entry: TimeEntry): Observable<boolean>{
+  editTimeEntry(entry: TimeEntryDisplay): Observable<boolean>{
+    //TODO: when this is really working, we would only want to pass the base class to the 
     let fakeObservable = Observable.create(obs => {
       setTimeout(() => {
         let timeIdx = this.fakeTimeEntries.findIndex((value, idx, arr) => value.id === entry.id);

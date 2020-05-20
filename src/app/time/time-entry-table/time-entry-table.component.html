@@ -2,7 +2,7 @@
     <app-loading-spinner></app-loading-spinner>
 </div>
 
-<app-time-edit-box [entry]="selectedEditEntry" [userDisplayName]="userDisplayName" (close)="handleUpdatedEntry($event)" *ngIf="selectedEditEntry"></app-time-edit-box>
+<app-time-edit-box [entry]="selectedEditEntry" [userDisplayName]="userDisplayName" [students]="students" (close)="handleUpdatedEntry($event)" *ngIf="selectedEditEntry"></app-time-edit-box>
 <table class="table dark" width="100%">
     <thead class="mid">
         <tr>
@@ -22,8 +22,8 @@
     </thead>
     <tbody>
         <tr *ngFor="let entry of timeEntries">
-            <td *ngIf="!isPreceptor">{{entry.preceptor}}</td>
-            <td *ngIf="!isLearner">{{entry.student}}</td>
+            <td *ngIf="!isPreceptor">{{entry.preceptorDisplayName}}</td>
+            <td *ngIf="!isLearner">{{entry.studentDisplayName}}</td>
             <td>{{entry.rotation}}</td>
             <td>{{entry.date.toLocaleDateString()}}</td>
             <td>{{entry.hours}} hour{{entry.hours > 1 ? 's' : ''}}</td>

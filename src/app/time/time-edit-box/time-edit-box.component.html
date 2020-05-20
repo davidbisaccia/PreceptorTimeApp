@@ -10,7 +10,7 @@
     <form [formGroup]="editTimeEntryForm"> 
         <div class="form-group">
             <label for="preceptor">Preceptor</label>
-            <input type="text" id="preceptor" formControlName="preceptor" class="form-control" disabled>
+            <input type="text" id="preceptor" formControlName="preceptor" class="form-control">
             <span *ngIf="!editTimeEntryForm.get('preceptor').valid && editTimeEntryForm.get('preceptor').touched" class="help-block">
                 Preceptor is required
             </span>
@@ -18,7 +18,10 @@
 
         <div class="form-group">
             <label for="student">Student</label>
-            <input type="text" id="student" formControlName="student" class="form-control" [disabled]="isEditMode">
+            <select id="student" formControlName="student" class="form-control">
+                <option *ngFor="let student of students" [value]="student.id">{{student.displayName}}</option>
+            </select>
+            <!-- <input type="text" id="student" formControlName="student" class="form-control" [disabled]="isEditMode"> -->
             <span *ngIf="!editTimeEntryForm.get('student').valid && editTimeEntryForm.get('student').touched" class="help-block">
                 Student is required
             </span>

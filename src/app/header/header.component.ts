@@ -12,6 +12,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   allowReports: boolean = false
   allowAdmin: boolean = false;
+  isTeacher: boolean = false;
   isAuthenticated: boolean = false;
   userSub: Subscription;
 
@@ -24,9 +25,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this.isAuthenticated = false;
           this.allowAdmin = false;
           this.allowReports = false;
+          this.isTeacher = false;
         }
         else {
           this.isAuthenticated = true;
+          this.isTeacher = user.isPreceptor;
           this.allowReports = user.isAdmin || user.isPreceptor;
           this.allowAdmin = user.isAdmin;
           console.log(user);
