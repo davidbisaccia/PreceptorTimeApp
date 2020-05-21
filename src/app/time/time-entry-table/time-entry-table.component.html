@@ -6,14 +6,14 @@
 <table class="table dark" width="100%">
     <thead class="mid">
         <tr>
-            <th *ngIf="!isPreceptor">Preceptor</th>
-            <th *ngIf="!isLearner">Student</th>
-            <th>Rotation</th>
-            <th>Date</th>
-            <th>Time</th>
-            <th colspan="3">Notes</th>
-            <th *ngIf="isPreceptor"></th>
-            <th *ngIf="isPreceptor">
+            <th class="col-md-auto" *ngIf="!isPreceptor">Preceptor</th>
+            <th class="col-md-auto" *ngIf="!isLearner">Student</th>
+            <th class="col-md">Rotation</th>
+            <th class="col-md">Date</th>
+            <th class="col-md-auto">Time</th>
+            <th class="col-md-3">Notes</th>
+            <th class="col-md" *ngIf="isPreceptor"></th>
+            <th class="col-md" *ngIf="isPreceptor">
                 <button class="btn btn-success" type="button" (click)="onAddEntry()">
                     <span class="glyphicon glyphicon-plus"></span>
                 </button>
@@ -27,7 +27,7 @@
             <td>{{entry.rotation}}</td>
             <td>{{entry.date.toLocaleDateString()}}</td>
             <td>{{entry.hours}} hour{{entry.hours > 1 ? 's' : ''}}</td>
-            <td colspan="3">{{entry.notes.substring(0, 200)}}</td>
+            <td>{{entry.notes.substring(0, 200)}}</td>
             <td *ngIf="isPreceptor">
                 <button class="btn btn-primary" type="button" (click)="onEditEntry(entry)">
                     <span class="glyphicon glyphicon-pencil"></span>
