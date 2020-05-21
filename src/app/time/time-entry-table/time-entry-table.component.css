@@ -10,3 +10,7 @@
     font: 'arial';
     font-size: 16px;
 }
+
+button {
+    margin-left: 10px;
+}
