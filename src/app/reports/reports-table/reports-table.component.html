@@ -1,1 +1,22 @@
-<p>reports-table works!</p>
+<div *ngIf="isLoading" style="text-align: center">
+    <app-loading-spinner></app-loading-spinner>
+</div>
+
+<table *nfIg="reportData.length > 0" class="table dark" width="100%">
+    <thead class="mid">
+        <tr>
+            <th class="col-md">Preceptor</th>
+            <th class="col-md">Student</th>
+            <th class="col-md">Rotation</th>
+            <th class="col-md">Total Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let entry of reportData">
+            <td>{{entry.preceptor}}</td>
+            <td>{{entry.learner}}</td>
+            <td>{{entry.rotation}}</td>
+            <td>{{entry.totalHours}} hours</td>
+        </tr>
+    </tbody>
+</table>

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Report } from './report.model';
-import { RSA_X931_PADDING } from 'constants';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +9,7 @@ export class ReportsService {
 
   private fakePreceptorReports: Report[] = [];
   private fakeStudentReports: Report[] = [];
+  currentReports = new Subject<Report[]>();
 
   SetupFakeDataForTestingWithoutBackend(){
     let r1 = new Report('preceptor1', 'student name', 'GI', 33);
@@ -35,11 +35,16 @@ export class ReportsService {
 
 
 
+  //we could make these not return the observable values, because the component that is firing these is not the component that is 
+  //showing them, hence the currentReports subject.  Though maybe the in the future who ever calls this will want to know? So
+  //I will leave it that way for now.
   GetReportsForPreceptor(preceptorId: number, year: number) : Observable<Report[]> {
     let fakeObservable = Observable.create(obs => {
       setTimeout(() =>
       {
-        obs.next(this.fakePreceptorReports.slice(0, 3));
+        let value = this.fakePreceptorReports.slice(0, 3);
+        obs.next(value);
+        this.currentReports.next(value);
         obs.complete();
       }, 1000);
     });
@@ -51,7 +56,9 @@ export class ReportsService {
     let fakeObservable = Observable.create(obs => {
       setTimeout(() =>
       {
-        obs.next(this.fakePreceptorReports.slice());
+        let value = this.fakePreceptorReports.slice();
+        obs.next(value);
+        this.currentReports.next(value);
         obs.complete();
       }, 1000);
     });
@@ -63,7 +70,9 @@ export class ReportsService {
     let fakeObservable = Observable.create(obs => {
       setTimeout(() =>
       {
-        obs.next(this.fakeStudentReports.slice());
+        let value = this.fakeStudentReports.slice();
+        obs.next(value);
+        this.currentReports.next(value);
         obs.complete();
       }, 1000);
     });
