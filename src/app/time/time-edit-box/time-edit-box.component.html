@@ -21,7 +21,6 @@
             <select id="student" formControlName="student" class="form-control">
                 <option *ngFor="let student of students" [value]="student.id">{{student.displayName}}</option>
             </select>
-            <!-- <input type="text" id="student" formControlName="student" class="form-control" [disabled]="isEditMode"> -->
             <span *ngIf="!editTimeEntryForm.get('student').valid && editTimeEntryForm.get('student').touched" class="help-block">
                 Student is required
             </span>
@@ -54,13 +53,12 @@
         <div class="form-group">
             <label for="notes">Notes</label>
             <textarea name="notes" id="notes" formControlName="notes" class="form-control" cols="50" rows="3"></textarea>
-            <!-- <input type="text" id="notes" formControlName="notes" class="form-control"> -->
         </div>
 
         <br>
         <div class="alert-box-actions">
-            <button class="btn btn-success" type="button" (click)="onUpdate()" [disabled]="!editTimeEntryForm.valid || isLoading">{{isEditMode ? 'Update' : 'Add'}}</button>
+            <button class="btn btn-success" type="button" (click)="onUpdate()" [disabled]="!editTimeEntryForm.valid || isBusy">{{isEditMode ? 'Update' : 'Add'}}</button>
             <button class="btn btn-primary" type="button" (click)="onClose(null)">Cancel</button>
-        </div> 
+        </div>
     </form>
 </div>
