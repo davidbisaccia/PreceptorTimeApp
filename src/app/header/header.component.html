@@ -11,7 +11,7 @@
                 <li routerLinkActive="active"><a [routerLink]="['/shopping-list']" *ngIf="isAuthenticated && allowReports">Reports</a></li>
                 <li routerLinkActive="active"><a [routerLink]="['/admin']"  *ngIf="isAuthenticated && allowAdmin">Admin</a></li> -->
                 <li routerLinkActive="active"><a [routerLink]="['/time']" *ngIf="isAuthenticated">{{isTeacher ? 'Manage' : 'View'}}</a></li>
-                <li routerLinkActive="active"><a href="#" *ngIf="isAuthenticated && allowReports">Reports</a></li>
+                <li routerLinkActive="active"><a [routerLink]="['/reports']" *ngIf="isAuthenticated && allowReports">Reports</a></li>
                 <li routerLinkActive="active"><a href="#"  *ngIf="isAuthenticated && allowAdmin">Admin</a></li>
                 <li routerLinkActive="active"><a [routerLink]="['/auth']" *ngIf="!isAuthenticated">Login</a></li>
             </ul>
