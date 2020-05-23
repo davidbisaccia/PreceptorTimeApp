@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Report } from './report.model';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,7 @@ export class ReportsService {
   private fakePreceptorReports: Report[] = [];
   private fakeStudentReports: Report[] = [];
   currentReports = new Subject<Report[]>();
+  isLoadingReportData = new BehaviorSubject<boolean>(false);
 
   SetupFakeDataForTestingWithoutBackend(){
     let r1 = new Report('preceptor1', 'student name', 'GI', 33);
@@ -39,12 +40,15 @@ export class ReportsService {
   //showing them, hence the currentReports subject.  Though maybe the in the future who ever calls this will want to know? So
   //I will leave it that way for now.
   GetReportsForPreceptor(preceptorId: number, year: number) : Observable<Report[]> {
+    this.isLoadingReportData.next(true);
+
     let fakeObservable = Observable.create(obs => {
       setTimeout(() =>
       {
         let value = this.fakePreceptorReports.slice(0, 3);
         obs.next(value);
         this.currentReports.next(value);
+        this.isLoadingReportData.next(false);
         obs.complete();
       }, 1000);
     });
@@ -53,12 +57,15 @@ export class ReportsService {
   }
 
   GetAllReports(year: number): Observable<Report[]> {
+    this.isLoadingReportData.next(true);
+
     let fakeObservable = Observable.create(obs => {
       setTimeout(() =>
       {
         let value = this.fakePreceptorReports.slice();
         obs.next(value);
         this.currentReports.next(value);
+        this.isLoadingReportData.next(false);
         obs.complete();
       }, 1000);
     });
@@ -67,12 +74,15 @@ export class ReportsService {
   }
 
   GetAllReportsForStudent(studentId: number, year: number): Observable<Report[]> {
+    this.isLoadingReportData.next(true);
+
     let fakeObservable = Observable.create(obs => {
       setTimeout(() =>
       {
         let value = this.fakeStudentReports.slice();
         obs.next(value);
         this.currentReports.next(value);
+        this.isLoadingReportData.next(false);
         obs.complete();
       }, 1000);
     });

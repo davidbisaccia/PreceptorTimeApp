@@ -1,10 +1,13 @@
-<div *ngIf="isLoading" style="text-align: center">
-    <app-loading-spinner></app-loading-spinner>
+
+
+<div class="dark" *ngIf="reportData.length === 0 || isLoading" >
+    <p *ngIf="!isLoading">Please select a report criteria to run.</p>
+    <div *ngIf="isLoading" style="text-align: center">
+        <app-loading-spinner></app-loading-spinner>
+    </div>
 </div>
 
-<p class="dark" *ngIf="reportData.length === 0" >Please select a report criteria to run.</p>
-
-<table *ngIf="reportData.length > 0" class="table dark" width="100%">
+<table *ngIf="reportData.length > 0 && !isLoading" class="table dark" width="100%">
     <thead class="mid">
         <tr>
             <th class="col-md">Preceptor</th>

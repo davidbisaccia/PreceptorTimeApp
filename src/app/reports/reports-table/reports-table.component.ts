@@ -11,9 +11,11 @@ import { Subscription } from 'rxjs';
 export class ReportsTableComponent implements OnInit, OnDestroy {
 
   private reportSub: Subscription;
+  private loadingReportsSub: Subscription;
   reportData: Report[] = [];
   isLoading: boolean = false;
   allHoursTotal: number = 0;
+  message: string = 'Please select a report criteria to run.';
 
   constructor(private reportService: ReportsService) { }
 
@@ -23,12 +25,24 @@ export class ReportsTableComponent implements OnInit, OnDestroy {
       this.allHoursTotal = this.reportData.map(x => x.totalHours).reduce((a,b) => a + b);
     }, error => {
       this.reportData = [];
-      //TODO: consider logging an error as well
+      this.handleErrorMessage(error);
     });
+
+    this.loadingReportsSub = this.reportService.isLoadingReportData.subscribe(loading => {
+      this.isLoading = loading;
+    }, error => {
+      this.isLoading = false;
+      this.handleErrorMessage(error);
+    });
+  }
+
+  private handleErrorMessage(errorMsg: string){
+    this.message = errorMsg;
   }
 
   ngOnDestroy(): void {
     this.reportSub.unsubscribe();
+    this.loadingReportsSub.unsubscribe();
   }
 
 }
