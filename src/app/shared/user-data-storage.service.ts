@@ -51,5 +51,15 @@ export class UserDataStorageService {
     return fakeObservable;
   }
 
+  getUsers(): Observable<UserInfo[]>{
+    let fakeObservable = Observable.create(obs => {
+      setTimeout(() => {
+        obs.next(this.fakeData.slice());
+        obs.complete();
+      }, 600);
+    });
+
+    return fakeObservable;
+  }
 
 }
