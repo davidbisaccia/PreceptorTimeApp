@@ -2,12 +2,16 @@
     margin-left: 10px;
 }
 
-label, h2 {
+h2 {
     color: #DDD;
 }
 
+label {
+    color: black;
+}
+
 .main{
-    background-color: #333;
+    background-color: #E5989B;
     box-shadow: 0 2px 8px rgba(0,0,0, 0.26);
     border-radius: 8px;
     padding: 8px;

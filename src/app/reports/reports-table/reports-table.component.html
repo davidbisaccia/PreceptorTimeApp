@@ -2,6 +2,8 @@
     <app-loading-spinner></app-loading-spinner>
 </div>
 
+<p class="dark" *ngIf="reportData.length === 0" >Please select a report criteria to run.</p>
+
 <table *ngIf="reportData.length > 0" class="table dark" width="100%">
     <thead class="mid">
         <tr>
