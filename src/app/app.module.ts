@@ -7,11 +7,13 @@ import { HeaderComponent } from './header/header.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
+import { AdminComponent } from './admin/admin/admin.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,
