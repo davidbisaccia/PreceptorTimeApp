@@ -2,7 +2,7 @@
     <app-loading-spinner></app-loading-spinner>
 </div>
 
-<table *nfIg="reportData.length > 0" class="table dark" width="100%">
+<table *ngIf="reportData.length > 0" class="table dark" width="100%">
     <thead class="mid">
         <tr>
             <th class="col-md">Preceptor</th>
@@ -17,6 +17,12 @@
             <td>{{entry.learner}}</td>
             <td>{{entry.rotation}}</td>
             <td>{{entry.totalHours}} hours</td>
+        </tr>
+        <tr>
+            <td><b>Total:</b></td>
+            <td></td>
+            <td></td>
+            <td><b>{{allHoursTotal}}</b></td>
         </tr>
     </tbody>
 </table>

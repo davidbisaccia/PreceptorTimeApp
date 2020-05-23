@@ -10,3 +10,8 @@
     font: 'arial';
     font-size: 16px;
 }
+
+table {
+    padding: 8px;
+    margin-top: 10px;
+}

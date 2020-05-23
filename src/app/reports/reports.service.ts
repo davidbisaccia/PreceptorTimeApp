@@ -79,4 +79,16 @@ export class ReportsService {
 
     return fakeObservable;
   }
+
+  GetAvailableYears() : Observable<number[]>{
+    let fakeObservable = Observable.create(obs => {
+      setTimeout(() =>
+      {
+        obs.next([2017, 2018, 2019, 2020]);
+        obs.complete();
+      }, 1000);
+    });
+
+    return fakeObservable;
+  }
 }

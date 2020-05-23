@@ -12,11 +12,15 @@ export class ReportsTableComponent implements OnInit, OnDestroy {
 
   private reportSub: Subscription;
   reportData: Report[] = [];
+  isLoading: boolean = false;
+  allHoursTotal: number = 0;
+
   constructor(private reportService: ReportsService) { }
 
   ngOnInit(): void {
     this.reportSub = this.reportService.currentReports.subscribe(data => {
       this.reportData = data;
+      this.allHoursTotal = this.reportData.map(x => x.totalHours).reduce((a,b) => a + b);
     }, error => {
       this.reportData = [];
       //TODO: consider logging an error as well
