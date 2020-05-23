@@ -1,7 +1,7 @@
 
 
-<div class="dark" *ngIf="reportData.length === 0 || isLoading" >
-    <p *ngIf="!isLoading">Please select a report criteria to run.</p>
+<div class="dark rounded-box" *ngIf="reportData.length === 0 || isLoading" >
+    <p *ngIf="!isLoading">{{message}}</p>
     <div *ngIf="isLoading" style="text-align: center">
         <app-loading-spinner></app-loading-spinner>
     </div>
