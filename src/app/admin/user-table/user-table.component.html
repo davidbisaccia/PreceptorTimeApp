@@ -1,6 +1,6 @@
 <h2>User Accounts</h2>
 
-<table>
+<table class="table dark" width="100%">
     <thead>
         <tr>
             <td>Display Name</td>
@@ -12,7 +12,9 @@
         <tr *ngFor="let u of users">
             <td>{{u.displayName}}</td>
             <td>{{u.accountType}}</td>
-            <td></td>
+            <td><button class="btn" [ngClass]="u.active ? 'btn-danger' : 'btn-success'" type="button" (click)="onActiveChanged(u.id)">
+                <span class="glyphicon" [ngClass]="u.active ? 'glyphicon-ban-circle' : 'glyphicon-eye-open'"></span>
+            </button></td>
         </tr>
     </tbody>
 </table>

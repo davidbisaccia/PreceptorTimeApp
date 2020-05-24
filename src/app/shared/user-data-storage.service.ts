@@ -10,12 +10,12 @@ export class UserDataStorageService {
   private fakeData: UserInfo[] = [];
 
   private setupFakeDataForTestingWithNoBackend(){
-    const p1 = new UserInfo(1, 'dave', 'preceptor');
-    const p2 = new UserInfo(2, 'me', 'student');
-    const p3 = new UserInfo(3, 'Brad', 'admin');
-    const p4 = new UserInfo(4, 'MECEPTOR', 'preceptor');
-    const p5 = new UserInfo(5, 'peeps', 'resident');
-    const p6 = new UserInfo(6, 'other peeps', 'student');
+    const p1 = new UserInfo(1, 'dave', 'preceptor', true);
+    const p2 = new UserInfo(2, 'me', 'student', true);
+    const p3 = new UserInfo(3, 'Brad', 'admin', true);
+    const p4 = new UserInfo(4, 'MECEPTOR', 'preceptor', true);
+    const p5 = new UserInfo(5, 'peeps', 'resident', true);
+    const p6 = new UserInfo(6, 'other peeps', 'student', true);
 
     this.fakeData.push(p1);
     this.fakeData.push(p2);

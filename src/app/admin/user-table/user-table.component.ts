@@ -22,4 +22,11 @@ export class UserTableComponent implements OnInit {
     });
   }
 
+  onActiveChanged(id: number){
+    let u = this.users.find((v, i, arr) => v.id === id);
+    if(u !== undefined){
+      u.active = !u.active;
+    }
+  }
+
 }
