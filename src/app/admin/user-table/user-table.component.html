@@ -1,7 +1,7 @@
-<h2>User Accounts</h2>
+<app-reset-password-box *ngIf="targetUserResetPassword !== null" [user]="targetUserResetPassword" (close)="closePasswordResetBox()"></app-reset-password-box>
 
 <table class="table dark" width="100%">
-    <thead>
+    <thead class="mid">
         <tr>
             <td>Display Name</td>
             <td>Account Type</td>
@@ -14,10 +14,11 @@
             <td>{{u.displayName}}</td>
             <td>{{u.accountType}}</td>
             <td>
-                <button class="btn btn-primary" type="button" (click)="onResetPassword(u.id)">Reset Password</button>
+                <button class="btn btn-primary" type="button" (click)="onResetPassword(u)">Reset Password</button>
             </td>
             <td>
-                <button class="btn" [ngClass]="u.active ? 'btn-danger' : 'btn-success'" type="button" (click)="onActiveChanged(u.id)">
+                <button class="btn" [ngClass]="u.active ? 'btn-danger' : 'btn-success'" type="button" 
+                    (click)="onAccountStatusChange(u.id)" title="{{u.active ? 'disable account' : 'activate account'}}">
                     <span class="glyphicon" [ngClass]="u.active ? 'glyphicon-ban-circle' : 'glyphicon-eye-open'"></span>
                 </button>
             </td>

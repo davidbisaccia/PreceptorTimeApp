@@ -62,4 +62,26 @@ export class UserDataStorageService {
     return fakeObservable;
   }
 
+  resetUserPassword(userId: number, pass: string): Observable<boolean> {
+    let fakeObservable = Observable.create(obs => {
+      setTimeout(() => {
+        obs.next(true);
+        obs.complete();
+      }, 600);
+    });
+
+    return fakeObservable;
+  }
+
+  changeAccountStatus(userId: number, active: boolean): Observable<boolean> {
+    let fakeObservable = Observable.create(obs => {
+      setTimeout(() => {
+        obs.next(true);
+        obs.complete();
+      }, 600);
+    });
+
+    return fakeObservable;
+  }
+
 }

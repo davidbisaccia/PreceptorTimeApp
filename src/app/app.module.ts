@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
 import { AdminComponent } from './admin/admin/admin.component';
 import { UserTableComponent } from './admin/user-table/user-table.component';
+import { ResetPasswordBoxComponent } from './admin/reset-password-box/reset-password-box.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { UserTableComponent } from './admin/user-table/user-table.component';
     HeaderComponent,
     AdminComponent,
     UserTableComponent,
+    ResetPasswordBoxComponent,
   ],
   imports: [
     BrowserModule,

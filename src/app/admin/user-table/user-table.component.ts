@@ -11,25 +11,52 @@ export class UserTableComponent implements OnInit {
 
   users: UserInfo[]= [];
   errorMsg: string = null;
+  isUpdating: boolean = false;
+  private targetUserResetPassword: UserInfo = null;
 
   constructor(private userService: UserDataStorageService) { }
 
   ngOnInit(): void {
-    this.userService.getUsers().subscribe(users => {
+    let sub = this.userService.getUsers().subscribe(users => {
       this.users = users;
+      sub.unsubscribe();
     }, error => {
       this.errorMsg = error;
+      sub.unsubscribe();
     });
   }
 
-  onResetPassword(id: number){
-    //pop open form
+  onResetPassword(user: UserInfo){
+    if(user !== null){
+      this.targetUserResetPassword = user;
+    }
   }
 
-  onActiveChanged(id: number){
+  closePasswordResetBox(){
+    this.targetUserResetPassword = null;
+  }
+
+  onAccountStatusChange(id: number){
+    this.isUpdating = true;
     let u = this.users.find((v, i, arr) => v.id === id);
     if(u !== undefined){
-      u.active = !u.active;
+      let sub = this.userService.changeAccountStatus(u.id, !u.active).subscribe(success => {
+        if(success) {
+          u.active = !u.active;
+        }
+        else {
+          this.errorMsg = 'Account not found, status was not changed.';
+        }
+
+        this.isUpdating = false;
+      }, error => {
+        this.errorMsg = 'Account not found, status was not changed.';
+        this.isUpdating = false;
+      });
+    }
+    else {
+      this.errorMsg = 'Account not found, status was not changed.';
+      this.isUpdating = false;
     }
   }
 

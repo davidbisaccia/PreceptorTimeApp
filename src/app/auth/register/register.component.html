@@ -61,7 +61,6 @@
             <div class="form-group">
                 <label for="confirmPassword">Confirm Password</label>
                 <input type="password" id="confirmPassword" formControlName="confirmPassword" class="form-control">
-                <!-- [errorStateMatcher]="matcher"> -->
                 <span *ngIf="!registerForm.get('confirmPassword').valid && registerForm.get('confirmPassword').touched" class="help-block">
                     Please enter a valid password (minimum 6 characters)
                 </span>
