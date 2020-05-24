@@ -8,12 +8,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
 import { AdminComponent } from './admin/admin/admin.component';
+import { UserTableComponent } from './admin/user-table/user-table.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     AdminComponent,
+    UserTableComponent,
   ],
   imports: [
     BrowserModule,
