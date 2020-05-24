@@ -10,6 +10,7 @@ import { SharedModule } from './shared/shared.module';
 import { AdminComponent } from './admin/admin/admin.component';
 import { UserTableComponent } from './admin/user-table/user-table.component';
 import { ResetPasswordBoxComponent } from './admin/reset-password-box/reset-password-box.component';
+import { UpdateAccountStatusBoxComponent } from './admin/update-account-status-box/update-account-status-box.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { ResetPasswordBoxComponent } from './admin/reset-password-box/reset-pass
     AdminComponent,
     UserTableComponent,
     ResetPasswordBoxComponent,
+    UpdateAccountStatusBoxComponent,
   ],
   imports: [
     BrowserModule,

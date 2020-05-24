@@ -12,6 +12,8 @@ export class UserTableComponent implements OnInit {
   users: UserInfo[]= [];
   errorMsg: string = null;
   isUpdating: boolean = false;
+
+  private targetUserUpdateStatus: UserInfo = null;
   private targetUserResetPassword: UserInfo = null;
 
   constructor(private userService: UserDataStorageService) { }
@@ -36,28 +38,16 @@ export class UserTableComponent implements OnInit {
     this.targetUserResetPassword = null;
   }
 
-  onAccountStatusChange(id: number){
-    this.isUpdating = true;
-    let u = this.users.find((v, i, arr) => v.id === id);
-    if(u !== undefined){
-      let sub = this.userService.changeAccountStatus(u.id, !u.active).subscribe(success => {
-        if(success) {
-          u.active = !u.active;
-        }
-        else {
-          this.errorMsg = 'Account not found, status was not changed.';
-        }
+  onAccountStatusChange(user: UserInfo){
+    this.targetUserUpdateStatus = user;
+  }
 
-        this.isUpdating = false;
-      }, error => {
-        this.errorMsg = 'Account not found, status was not changed.';
-        this.isUpdating = false;
-      });
+  closeUpdateAccountStatusBox(success: boolean){
+    if(success && this.targetUserUpdateStatus !== null){
+      this.targetUserUpdateStatus.active = !this.targetUserUpdateStatus.active;
     }
-    else {
-      this.errorMsg = 'Account not found, status was not changed.';
-      this.isUpdating = false;
-    }
+
+    this.targetUserUpdateStatus = null;
   }
 
 }

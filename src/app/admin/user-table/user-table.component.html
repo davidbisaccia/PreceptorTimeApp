@@ -1,5 +1,7 @@
 <app-reset-password-box *ngIf="targetUserResetPassword !== null" [user]="targetUserResetPassword" (close)="closePasswordResetBox()"></app-reset-password-box>
 
+<app-update-account-status-box *ngIf="targetUserUpdateStatus !== null" [user]="targetUserUpdateStatus" (close)="closeUpdateAccountStatusBox($event)"></app-update-account-status-box>
+
 <table class="table dark" width="100%">
     <thead class="mid">
         <tr>
@@ -18,7 +20,7 @@
             </td>
             <td>
                 <button class="btn" [ngClass]="u.active ? 'btn-danger' : 'btn-success'" type="button" 
-                    (click)="onAccountStatusChange(u.id)" title="{{u.active ? 'disable account' : 'activate account'}}">
+                    (click)="onAccountStatusChange(u)" title="{{u.active ? 'disable account' : 'activate account'}}">
                     <span class="glyphicon" [ngClass]="u.active ? 'glyphicon-ban-circle' : 'glyphicon-eye-open'"></span>
                 </button>
             </td>
