@@ -22,6 +22,10 @@ export class UserTableComponent implements OnInit {
     });
   }
 
+  onResetPassword(id: number){
+    //pop open form
+  }
+
   onActiveChanged(id: number){
     let u = this.users.find((v, i, arr) => v.id === id);
     if(u !== undefined){

@@ -6,15 +6,21 @@
             <td>Display Name</td>
             <td>Account Type</td>
             <td></td>
+            <td></td>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let u of users">
             <td>{{u.displayName}}</td>
             <td>{{u.accountType}}</td>
-            <td><button class="btn" [ngClass]="u.active ? 'btn-danger' : 'btn-success'" type="button" (click)="onActiveChanged(u.id)">
-                <span class="glyphicon" [ngClass]="u.active ? 'glyphicon-ban-circle' : 'glyphicon-eye-open'"></span>
-            </button></td>
+            <td>
+                <button class="btn btn-primary" type="button" (click)="onResetPassword(u.id)">Reset Password</button>
+            </td>
+            <td>
+                <button class="btn" [ngClass]="u.active ? 'btn-danger' : 'btn-success'" type="button" (click)="onActiveChanged(u.id)">
+                    <span class="glyphicon" [ngClass]="u.active ? 'glyphicon-ban-circle' : 'glyphicon-eye-open'"></span>
+                </button>
+            </td>
         </tr>
     </tbody>
 </table>
