@@ -7,7 +7,7 @@ const appRoutes:Routes = [
     {path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)},
     {path: 'time', loadChildren: () => import('./time/time.module').then(m => m.TimeModule)},
     {path: 'reports', loadChildren: () => import('./reports/reports.module').then(m => m.ReportsModule)},
-    {path: 'admin', component: AdminComponent}
+    {path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)},
    ];
 
    
