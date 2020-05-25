@@ -13,7 +13,7 @@ import { UserInfo } from 'src/app/shared/userInfo.model';
   templateUrl: './time-edit-box.component.html',
   styleUrls: ['./time-edit-box.component.css']
 })
-export class TimeEditBoxComponent implements OnInit, OnDestroy {
+export class TimeEditBoxComponent implements OnInit {
 
   @Output() close = new EventEmitter<TimeEntryDisplay>();
   @Input() entry: TimeEntryDisplay;
@@ -74,10 +74,6 @@ export class TimeEditBoxComponent implements OnInit, OnDestroy {
     timeEntry.notes = this.editTimeEntryForm.get('notes').value;
 
     return timeEntry;
-  }
-
-  ngOnDestroy(): void {
-    // this.userSub.unsubscribe();
   }
 
   //TODO: handle and add

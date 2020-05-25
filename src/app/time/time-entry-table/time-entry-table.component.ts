@@ -37,7 +37,6 @@ export class TimeEntryTableComponent implements OnInit, OnDestroy {
         return;
       }
 
-    //todo: unsubscribe?
     this.userService.getLearners().subscribe(learners => {
       this.students = learners;
       console.log(this.students);
@@ -52,12 +51,10 @@ export class TimeEntryTableComponent implements OnInit, OnDestroy {
 
       this.isLoading = true;
       //TODO: maybe we need the other one, that holds onto the last thingy
-      let tempSub = getMethod.subscribe(
+      getMethod.subscribe(
         times => {
         this.timeEntries = times;
         this.isLoading = false;
-        tempSub.unsubscribe();
-        
       }, error => {
           this.loadFailure = true;
           this.isLoading = false;

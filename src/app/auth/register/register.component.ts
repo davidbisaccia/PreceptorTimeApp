@@ -51,13 +51,10 @@ export class RegisterComponent implements OnInit {
         console.log(responseData);
         this.isLoading = false;
         this.router.navigate(['/time']);
-        //sub.unsubscribe();
       },
       errorMessage => {
         this.errorMsg = errorMessage;
-        //this.showErrorAlert(errorMessage);
         this.isLoading = false;
-        //sub.unsubscribe();
       });
   }
 

@@ -19,12 +19,10 @@ export class UserTableComponent implements OnInit {
   constructor(private userService: UserDataStorageService) { }
 
   ngOnInit(): void {
-    let sub = this.userService.getUsers().subscribe(users => {
+    this.userService.getUsers().subscribe(users => {
       this.users = users;
-      sub.unsubscribe();
     }, error => {
       this.errorMsg = error;
-      sub.unsubscribe();
     });
   }
 

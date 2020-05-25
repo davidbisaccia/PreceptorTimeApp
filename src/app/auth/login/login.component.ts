@@ -33,16 +33,12 @@ export class LoginComponent implements OnInit {
     
     const sub = this.auth.logIn(user, pass).subscribe(
       responseData => {
-        //console.log(responseData);
         this.isLoading = false;
         this.router.navigate(['/time']);
-        //sub.unsubscribe();
       },
       errorMessage => {
         this.errorMsg = errorMessage;
-        //this.showErrorAlert(errorMessage);
         this.isLoading = false;
-        //sub.unsubscribe();
       });
   }
 
