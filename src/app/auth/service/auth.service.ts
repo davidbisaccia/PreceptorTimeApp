@@ -1,5 +1,5 @@
-import { Injectable, OnInit } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Injectable, } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 import { AuthInterface } from './auth.interface';
@@ -8,9 +8,9 @@ import { AuthDebugService } from './auth.debug.service';
 
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root', 
 })
-export class AuthService implements OnInit {
+export class AuthService{
     
     service: AuthInterface;
 
@@ -18,8 +18,4 @@ export class AuthService implements OnInit {
         //TODO: provide a release/production one that communicates with an actual back end
         this.service = environment.production  ? new AuthDebugService(this.http, this.router) : new AuthDebugService(this.http, this.router);
     }
-    
-    ngOnInit(): void {
-    }
-    
 }
