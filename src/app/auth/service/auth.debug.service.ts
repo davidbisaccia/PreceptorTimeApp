@@ -1,17 +1,13 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, from, of } from 'rxjs';
-import { User } from './user.model';
+import { User } from '../user.model';
 
 import { throwError, timer } from 'rxjs';
-import { RegisterData } from './register-data.model'; 
+import { RegisterData } from '../register-data.model'; 
+import { AuthInterface } from './auth.interface';
 
-
-@Injectable({
-  providedIn: 'root'
-})
-export class AuthService {
+export class AuthDebugService implements AuthInterface {
 
   userSub = new BehaviorSubject<User>(null);
 

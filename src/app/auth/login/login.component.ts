@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../service/auth.service';
 import { take, map } from 'rxjs/operators';
+import { AuthInterface } from '../service/auth.interface';
 
 @Component({
   selector: 'app-login',
@@ -14,13 +15,17 @@ export class LoginComponent implements OnInit {
   signInForm: FormGroup;
   isLoading: boolean = false;
   errorMsg: string = null;
+  private auth: AuthInterface;
 
-  constructor(private router: Router, private auth: AuthService) { }
+  constructor(private router: Router, private authServ: AuthService) { 
+  }
 
   ngOnInit(): void {
+    this.auth = this.authServ.service;
     this.signInForm = new FormGroup({
       'username': new FormControl(null, [Validators.required, Validators.maxLength(32), Validators.minLength(6)]),
       'password': new FormControl(null, [Validators.required, Validators.minLength(6)]),
+
     });
 
     //if already logged in go to the default time management page.

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../auth/service/auth.service';
 import { Subscription } from 'rxjs';
 import { User } from '../auth/user.model';
 
@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(private auth: AuthService) { }
 
   ngOnInit(): void {
-    this.userSub = this.auth.userSub.subscribe(
+    this.userSub = this.auth.service.userSub.subscribe(
       (user) => {
         if(user === null){
           this.isAuthenticated = false;
@@ -44,7 +44,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onLogOut(){
-    this.auth.logOut();
+    this.auth.service.logOut();
   }
 
 }

@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserDataStorageService } from 'src/app/shared/user-data-storage.service';
 import { UserInfo } from 'src/app/shared/userInfo.model';
 import { ReportsService } from '../reports.service';
-import { AuthService } from 'src/app/auth/auth.service';
+import { AuthService } from 'src/app/auth/service/auth.service';
 
 @Component({
   selector: 'app-reports-search',
@@ -55,7 +55,7 @@ export class ReportsSearchComponent implements OnInit {
       }
     );
 
-    this.authService.userSub.subscribe(
+    this.authService.service.userSub.subscribe(
       user => {
         this.isAdmin = user.isAdmin;
         if(user.isPreceptor){

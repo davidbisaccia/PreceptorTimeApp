@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TimeEntryDisplay } from '../model/time-entry.model';
-import { AuthService } from 'src/app/auth/auth.service';
+import { AuthService } from 'src/app/auth/service/auth.service';
 import { TimeService } from '../time.service';
 import { Subscription } from 'rxjs';
 import { UserDataStorageService } from 'src/app/shared/user-data-storage.service';
@@ -27,7 +27,7 @@ export class TimeEntryTableComponent implements OnInit, OnDestroy {
   constructor(private auth: AuthService, private timeService: TimeService, private userService: UserDataStorageService) { }
 
   ngOnInit(): void {
-    this.userSub = this.auth.userSub.subscribe(user => {
+    this.userSub = this.auth.service.userSub.subscribe(user => {
       console.log(user);
       if(user === null){
         this.isPreceptor = false;

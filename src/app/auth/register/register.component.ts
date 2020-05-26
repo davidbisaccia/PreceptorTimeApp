@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormGroupDirective, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RegisterData } from '../register-data.model'
-import { AuthService } from '../auth.service';
+import { AuthService } from '../service/auth.service';
+import { AuthInterface } from '../service/auth.interface';
 
 export class MyErrorStateMatcher implements MyErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -24,8 +25,11 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   isLoading: boolean = false;
   errorMsg: string = null;
+  auth: AuthInterface;
 
-  constructor(private router: Router, private auth: AuthService) { }
+  constructor(private router: Router, private authServ: AuthService) {
+    this.auth = this.authServ.service;
+   }
 
   //name, email, account type, password, token, title
 
