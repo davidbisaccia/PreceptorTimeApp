@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { take, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -21,6 +22,15 @@ export class LoginComponent implements OnInit {
       'username': new FormControl(null, [Validators.required, Validators.maxLength(32), Validators.minLength(6)]),
       'password': new FormControl(null, [Validators.required, Validators.minLength(6)]),
     });
+
+    //if already logged in go to the default time management page.
+    this.auth.userSub.pipe(
+      take(1),
+      map( user => !!user)).subscribe(loggedIn => {
+        if(loggedIn){
+          this.router.navigate(['/time']);
+        }
+      });
   }
 
   onLogIn(){

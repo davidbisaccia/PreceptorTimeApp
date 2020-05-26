@@ -1,6 +1,5 @@
 import {NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
-import { AdminComponent } from './admin/admin/admin.component';
 
 const appRoutes:Routes = [
     {path: '', redirectTo: '/auth', pathMatch: 'full'},

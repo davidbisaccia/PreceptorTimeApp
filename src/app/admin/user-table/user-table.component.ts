@@ -13,8 +13,8 @@ export class UserTableComponent implements OnInit {
   errorMsg: string = null;
   isUpdating: boolean = false;
 
-  private targetUserUpdateStatus: UserInfo = null;
-  private targetUserResetPassword: UserInfo = null;
+  targetUserUpdateStatus: UserInfo = null;
+  targetUserResetPassword: UserInfo = null;
 
   constructor(private userService: UserDataStorageService) { }
 

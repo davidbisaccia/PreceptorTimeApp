@@ -10,9 +10,9 @@ import { UserDataStorageService } from 'src/app/shared/user-data-storage.service
 })
 export class ResetPasswordBoxComponent implements OnInit {
 
-  private resetUserPasswordForm: FormGroup;
-  private isUpdating: boolean = false;
-  private errorMsg: string = null;
+  resetUserPasswordForm: FormGroup;
+  isUpdating: boolean = false;
+  errorMsg: string = null;
 
   @Input() user: UserInfo;
   @Output() close = new EventEmitter<void>();

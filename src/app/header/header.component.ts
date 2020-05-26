@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         else {
           this.isAuthenticated = true;
           this.isTeacher = user.isPreceptor;
-          this.allowReports = user.isAdmin || user.isPreceptor;
+          this.allowReports = true;
           this.allowAdmin = user.isAdmin;
           console.log(user);
           console.log(user.isAdmin);
