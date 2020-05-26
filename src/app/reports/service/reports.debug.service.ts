@@ -1,11 +1,8 @@
-import { Injectable } from '@angular/core';
-import { Report } from './report.model';
+import { Report } from '../report.model';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { ReportsInterface } from './reports.interface';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class ReportsService {
+export class ReportsDebugService implements ReportsInterface {
 
   private fakePreceptorReports: Report[] = [];
   private fakeStudentReports: Report[] = [];

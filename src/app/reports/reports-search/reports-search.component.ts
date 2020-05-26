@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserDataStorageService } from 'src/app/shared/user-data-storage.service';
 import { UserInfo } from 'src/app/shared/userInfo.model';
-import { ReportsService } from '../reports.service';
+import { ReportsService } from '../service/reports.service';
 import { AuthService } from 'src/app/auth/service/auth.service';
+import { ReportsInterface } from '../service/reports.interface';
 
 @Component({
   selector: 'app-reports-search',
@@ -20,10 +21,13 @@ export class ReportsSearchComponent implements OnInit {
   loggedInPreceptorId: number = -1;
   loggedInStudentId: number = -1; 
   isLoading: boolean = true;
+  reportService: ReportsInterface;
 
-  constructor(private userSerivce: UserDataStorageService, private reportService: ReportsService, private authService: AuthService) { }
+  constructor(private userSerivce: UserDataStorageService, private r: ReportsService, private authService: AuthService) { 
+  }
 
   ngOnInit(): void {
+    this.reportService = this.r.service;
 
     this.reportSearchForm = new FormGroup({
       'year' : new FormControl(null, Validators.required),

@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ReportsService } from '../reports.service';
+import { ReportsService } from '../service/reports.service';
 import { Report } from '../report.model';
 import { Subscription } from 'rxjs';
+import { ReportsInterface } from '../service/reports.interface';
 
 @Component({
   selector: 'app-reports-table',
@@ -16,10 +17,14 @@ export class ReportsTableComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   allHoursTotal: number = 0;
   message: string = 'Please select a report criteria to run.';
-
-  constructor(private reportService: ReportsService) { }
+  reportService: ReportsInterface;
+  
+  constructor(private r: ReportsService) { 
+  }
 
   ngOnInit(): void {
+    this.reportService = this.r.service;
+    
     this.reportSub = this.reportService.currentReports.subscribe(data => {
       this.reportData = data;
       this.allHoursTotal = this.reportData.map(x => x.totalHours).reduce((a,b) => a + b);
