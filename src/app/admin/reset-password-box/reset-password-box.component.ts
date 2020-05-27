@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserInfo } from 'src/app/shared/userInfo.model';
-import { UserDataStorageService } from 'src/app/shared/user-data-storage.service';
+import { UserDataStorageService } from 'src/app/shared/service/user-data-storage.service';
 
 @Component({
   selector: 'app-reset-password-box',
@@ -31,7 +31,7 @@ export class ResetPasswordBoxComponent implements OnInit {
     let pass = this.resetUserPasswordForm.get('password').value;
 
     this.isUpdating = true;
-    this.userService.resetUserPassword(this.user.id, pass).subscribe(
+    this.userService.service.resetUserPassword(this.user.id, pass).subscribe(
       success => {
         if(success){
           this.close.emit();

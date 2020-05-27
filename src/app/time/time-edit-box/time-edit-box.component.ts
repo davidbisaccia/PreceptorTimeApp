@@ -3,9 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TimeEntryDisplay } from '../model/time-entry.model';
 import { TimeService } from '../time.service';
 import { Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
-import { UserDataStorageService } from 'src/app/shared/user-data-storage.service';
 import { UserInfo } from 'src/app/shared/userInfo.model';
 
 @Component({
@@ -28,7 +26,7 @@ export class TimeEditBoxComponent implements OnInit {
 
   userSub : Subscription;
 
-  constructor(private timeService: TimeService, private userService: UserDataStorageService) { }
+  constructor(private timeService: TimeService) { }
 
   ngOnInit(): void {
     //the un-editables

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { UserDataStorageService } from 'src/app/shared/user-data-storage.service';
+import { UserDataStorageService } from 'src/app/shared/service/user-data-storage.service';
 import { UserInfo } from 'src/app/shared/userInfo.model';
 import { ReportsService } from '../service/reports.service';
 import { AuthService } from 'src/app/auth/service/auth.service';
@@ -34,7 +34,7 @@ export class ReportsSearchComponent implements OnInit {
       'preceptor' : new FormControl(null, Validators.required)
     });
 
-    this.userSerivce.getPreceptors().subscribe(
+    this.userSerivce.service.getPreceptors().subscribe(
       preceptors => {
         this.preceptors = preceptors;
         console.log(this.preceptors);

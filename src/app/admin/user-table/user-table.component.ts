@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserDataStorageService } from 'src/app/shared/user-data-storage.service';
+import { UserDataStorageService } from 'src/app/shared/service/user-data-storage.service';
 import { UserInfo } from 'src/app/shared/userInfo.model';
 
 @Component({
@@ -19,7 +19,7 @@ export class UserTableComponent implements OnInit {
   constructor(private userService: UserDataStorageService) { }
 
   ngOnInit(): void {
-    this.userService.getUsers().subscribe(users => {
+    this.userService.service.getUsers().subscribe(users => {
       this.users = users;
     }, error => {
       this.errorMsg = error;

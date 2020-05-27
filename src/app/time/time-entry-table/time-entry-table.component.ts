@@ -3,7 +3,7 @@ import { TimeEntryDisplay } from '../model/time-entry.model';
 import { AuthService } from 'src/app/auth/service/auth.service';
 import { TimeService } from '../time.service';
 import { Subscription } from 'rxjs';
-import { UserDataStorageService } from 'src/app/shared/user-data-storage.service';
+import { UserDataStorageService } from 'src/app/shared/service/user-data-storage.service';
 import { UserInfo } from 'src/app/shared/userInfo.model';
 
 @Component({
@@ -37,7 +37,7 @@ export class TimeEntryTableComponent implements OnInit, OnDestroy {
         return;
       }
 
-    this.userService.getLearners().subscribe(learners => {
+    this.userService.service.getLearners().subscribe(learners => {
       this.students = learners;
       console.log(this.students);
     }, error => {

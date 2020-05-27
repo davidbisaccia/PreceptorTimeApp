@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { UserInfo } from 'src/app/shared/userInfo.model';
-import { UserDataStorageService } from 'src/app/shared/user-data-storage.service';
+import { UserDataStorageService } from 'src/app/shared/service/user-data-storage.service';
 
 @Component({
   selector: 'app-update-account-status-box',
@@ -22,7 +22,7 @@ export class UpdateAccountStatusBoxComponent implements OnInit {
   onUpdateAccountStatus(){
     this.isUpdating = true;
 
-    this.userService.changeAccountStatus(this.user.id, !this.user.active).subscribe(
+    this.userService.service.changeAccountStatus(this.user.id, !this.user.active).subscribe(
       success => {
         if(success){
           this.close.emit(true);
