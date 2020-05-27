@@ -61,6 +61,8 @@ export class ReportsSearchComponent implements OnInit {
 
     this.authService.service.userSub.subscribe(
       user => {
+        if(user === null) return;
+
         this.isAdmin = user.isAdmin;
         if(user.isPreceptor){
           this.loggedInPreceptorId = +user.id;
