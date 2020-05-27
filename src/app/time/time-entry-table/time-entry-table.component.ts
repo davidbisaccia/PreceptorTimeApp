@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TimeEntryDisplay } from '../model/time-entry.model';
 import { AuthService } from 'src/app/auth/service/auth.service';
-import { TimeService } from '../time.service';
+import { TimeService } from '../service/time.service';
 import { Subscription } from 'rxjs';
 import { UserDataStorageService } from 'src/app/shared/service/user-data-storage.service';
 import { UserInfo } from 'src/app/shared/userInfo.model';
+import { TimeServiceInterface } from '../service/time.interface';
 
 @Component({
   selector: 'app-time-entry-table',
@@ -23,10 +24,13 @@ export class TimeEntryTableComponent implements OnInit, OnDestroy {
 
   selectedEditEntry: TimeEntryDisplay = null;
   students: UserInfo[] = [];
+  private timeService: TimeServiceInterface;
 
-  constructor(private auth: AuthService, private timeService: TimeService, private userService: UserDataStorageService) { }
+  constructor(private auth: AuthService, private time: TimeService, private userService: UserDataStorageService) { }
 
   ngOnInit(): void {
+    console.log(this.time.service); 
+    this.timeService = this.time.service;
     this.userSub = this.auth.service.userSub.subscribe(user => {
       console.log(user);
       if(user === null){

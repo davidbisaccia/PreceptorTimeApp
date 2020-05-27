@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { UserInfo } from '../userInfo.model';
 
-export class UserDataStorageInterface {
+export interface UserDataStorageInterface {
     getPreceptors: () => Observable<UserInfo[]>;
     getLearners: () =>Observable<UserInfo[]>;
     getUsers: () => Observable<UserInfo[]>;

@@ -1,10 +1,11 @@
 import { Component, OnInit, Output, EventEmitter, Input, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TimeEntryDisplay } from '../model/time-entry.model';
-import { TimeService } from '../time.service';
+import { TimeService } from '../service/time.service';
 import { Subscription } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { UserInfo } from 'src/app/shared/userInfo.model';
+import { TimeServiceInterface } from '../service/time.interface';
 
 @Component({
   selector: 'app-time-edit-box',
@@ -25,10 +26,13 @@ export class TimeEditBoxComponent implements OnInit {
   preceptorId: number = -1;
 
   userSub : Subscription;
+  private timeService: TimeServiceInterface;
 
-  constructor(private timeService: TimeService) { }
+  constructor(private time: TimeService) { }
 
   ngOnInit(): void {
+    this.timeService = this.time.service;
+
     //the un-editables
     this.editEntryId = this.entry ? this.entry.id : -1;
     this.preceptorId = this.entry.preceptorId;

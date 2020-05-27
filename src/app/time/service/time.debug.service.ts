@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { TimeEntryDisplay } from './model/time-entry.model';
+import { TimeEntryDisplay } from '../model/time-entry.model';
 import { Observable } from 'rxjs';
+import { TimeServiceInterface } from './time.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TimeService {
+export class TimeDebugService implements TimeServiceInterface {
 
   private fakeTimeEntries: TimeEntryDisplay[] = [];
 
