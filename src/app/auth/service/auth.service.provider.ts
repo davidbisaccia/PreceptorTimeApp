@@ -16,6 +16,6 @@ export class AuthServiceProvider{
 
     constructor(private http: HttpClient, private router: Router) { 
         //TODO: provide a release/production one that communicates with an actual back end
-        this.service = environment.production  ? new AuthNoBackendService(this.http, this.router) : new AuthNoBackendService(this.http, this.router);
+        this.service = environment.backendService === 'FakeBackEnd'  ? new AuthNoBackendService(this.http, this.router) : new AuthNoBackendService(this.http, this.router);
     }
 }

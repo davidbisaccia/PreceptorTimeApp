@@ -12,6 +12,6 @@ export class TimeServiceProvider {
 
   constructor() {
     //TODO: provide a release/production one that communicates with an actual back end
-    this.service = environment.production ? new TimeNoBackendService() : new TimeNoBackendService();
+    this.service = environment.backendService === 'FakeBackEnd' ? new TimeNoBackendService() : new TimeNoBackendService();
   }
 }

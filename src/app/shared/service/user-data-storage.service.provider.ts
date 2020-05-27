@@ -14,7 +14,7 @@ export class UserDataStorageServiceProvider {
 
   constructor() {
     //TODO: provide a release/production one that communicates with an actual back end
-    this.service = environment.production ? new UserDataStorageNoBackendService() : new UserDataStorageNoBackendService();
+    this.service = environment.backendService === 'FakeBackEnd' ? new UserDataStorageNoBackendService() : new UserDataStorageNoBackendService();
    }
 
 }
