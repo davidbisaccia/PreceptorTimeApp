@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthService } from 'src/app/auth/service/auth.service';
+import { AuthServiceProvider } from 'src/app/auth/service/auth.service.provider';
 import { Subscription } from 'rxjs';
 import { TimeEntry } from '../model/time-entry.model';
 
@@ -16,7 +16,7 @@ export class TimeComponent implements OnInit, OnDestroy {
 
   timeEnties: TimeEntry[];
 
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthServiceProvider) { }
 
   ngOnInit(): void {
     this.userChanged = this.auth.service.userSub.subscribe((user) => {

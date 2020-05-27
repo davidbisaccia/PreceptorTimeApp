@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserDataStorageService } from 'src/app/shared/service/user-data-storage.service';
+import { UserDataStorageServiceProvider } from 'src/app/shared/service/user-data-storage.service.provider';
 import { UserInfo } from 'src/app/shared/userInfo.model';
 
 @Component({
@@ -16,7 +16,7 @@ export class UserTableComponent implements OnInit {
   targetUserUpdateStatus: UserInfo = null;
   targetUserResetPassword: UserInfo = null;
 
-  constructor(private userService: UserDataStorageService) { }
+  constructor(private userService: UserDataStorageServiceProvider) { }
 
   ngOnInit(): void {
     this.userService.service.getUsers().subscribe(users => {

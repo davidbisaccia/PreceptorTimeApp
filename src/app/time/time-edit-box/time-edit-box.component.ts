@@ -1,11 +1,11 @@
 import { Component, OnInit, Output, EventEmitter, Input, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TimeEntryDisplay } from '../model/time-entry.model';
-import { TimeService } from '../service/time.service';
+import { TimeServiceProvider } from '../service/time.service.provider';
 import { Subscription } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { UserInfo } from 'src/app/shared/userInfo.model';
-import { TimeServiceInterface } from '../service/time.interface';
+import { TimeServiceInterface } from '../service/time.service.interface';
 
 @Component({
   selector: 'app-time-edit-box',
@@ -28,7 +28,7 @@ export class TimeEditBoxComponent implements OnInit {
   userSub : Subscription;
   private timeService: TimeServiceInterface;
 
-  constructor(private time: TimeService) { }
+  constructor(private time: TimeServiceProvider) { }
 
   ngOnInit(): void {
     this.timeService = this.time.service;
@@ -37,11 +37,9 @@ export class TimeEditBoxComponent implements OnInit {
     this.editEntryId = this.entry ? this.entry.id : -1;
     this.preceptorId = this.entry.preceptorId;
 
-    console.log(this.isEditMode);
     this.isEditMode = this.editEntryId !== -1;
     let preceptorName = this.isEditMode && this.entry ? this.entry.preceptorDisplayName : this.userDisplayName; 
 
-    console.log(preceptorName);
     let dp = new DatePipe(navigator.language); 
     let p = 'y-MM-dd'; // YYYY-MM-DD
     

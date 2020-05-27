@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { UserInfo } from 'src/app/shared/userInfo.model';
-import { UserDataStorageService } from 'src/app/shared/service/user-data-storage.service';
+import { UserDataStorageServiceProvider } from 'src/app/shared/service/user-data-storage.service.provider';
 
 @Component({
   selector: 'app-update-account-status-box',
@@ -14,7 +14,7 @@ export class UpdateAccountStatusBoxComponent implements OnInit {
   @Output() close = new EventEmitter<boolean>();
   errorMsg: string = null;
 
-  constructor(private userService: UserDataStorageService) { }
+  constructor(private userService: UserDataStorageServiceProvider) { }
 
   ngOnInit(): void {
   }

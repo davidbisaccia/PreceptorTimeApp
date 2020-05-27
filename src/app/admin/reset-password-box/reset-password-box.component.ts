@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserInfo } from 'src/app/shared/userInfo.model';
-import { UserDataStorageService } from 'src/app/shared/service/user-data-storage.service';
+import { UserDataStorageServiceProvider } from 'src/app/shared/service/user-data-storage.service.provider';
 
 @Component({
   selector: 'app-reset-password-box',
@@ -17,7 +17,7 @@ export class ResetPasswordBoxComponent implements OnInit {
   @Input() user: UserInfo;
   @Output() close = new EventEmitter<void>();
 
-  constructor(private userService: UserDataStorageService) { }
+  constructor(private userService: UserDataStorageServiceProvider) { }
 
   ngOnInit(): void {
     this.resetUserPasswordForm = new FormGroup({
@@ -57,7 +57,6 @@ export class ResetPasswordBoxComponent implements OnInit {
     let pass = group.get('password').value;
     let confirm = group.get('confirmPassword').value;
 
-    console.log(pass + ' ' + confirm);
     if(pass === undefined || confirm === undefined) return { notSame: true };
 
     return pass === confirm ? null : { notSame: true } ;

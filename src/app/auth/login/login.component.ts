@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../service/auth.service';
+import { AuthServiceProvider } from '../service/auth.service.provider';
 import { take, map } from 'rxjs/operators';
-import { AuthInterface } from '../service/auth.interface';
+import { AuthServiceInterface } from '../service/auth.service.interface';
 
 @Component({
   selector: 'app-login',
@@ -15,9 +15,9 @@ export class LoginComponent implements OnInit {
   signInForm: FormGroup;
   isLoading: boolean = false;
   errorMsg: string = null;
-  private auth: AuthInterface;
+  private auth: AuthServiceInterface;
 
-  constructor(private router: Router, private authServ: AuthService) { 
+  constructor(private router: Router, private authServ: AuthServiceProvider) { 
   }
 
   ngOnInit(): void {

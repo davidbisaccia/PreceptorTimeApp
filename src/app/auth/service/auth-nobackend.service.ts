@@ -5,15 +5,14 @@ import { User } from '../user.model';
 
 import { throwError, timer } from 'rxjs';
 import { RegisterData } from '../register-data.model'; 
-import { AuthInterface } from './auth.interface';
+import { AuthServiceInterface } from './auth.service.interface';
 
-export class AuthDebugService implements AuthInterface {
+export class AuthNoBackendService implements AuthServiceInterface {
 
   userSub = new BehaviorSubject<User>(null);
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  //TODO: this is just a test setup for now, need to do the real deal when we pick back end
   logIn(email: string, password: string): Observable<User> {
     //defaulting to admin for now....
     let fakeResp = {email: email, userId: '1', displayName: 'Professor', accountType: 'admin', idToken: '1', expiresIn: '3600'};
@@ -88,7 +87,6 @@ export class AuthDebugService implements AuthInterface {
 
   private handleAuthentication(email: string, accountType: string, userId: string, displayName: string, token: string, expiresIn: number){
     const expirationDate = new Date(new Date().getTime() + (expiresIn * 1000));
-    console.log('handleAuth ' + accountType);
     const user = new User(email, userId, displayName, accountType, token, expirationDate);
 
     this.userSub.next(user);

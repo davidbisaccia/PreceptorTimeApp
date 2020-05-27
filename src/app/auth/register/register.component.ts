@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormGroupDirective, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RegisterData } from '../register-data.model'
-import { AuthService } from '../service/auth.service';
-import { AuthInterface } from '../service/auth.interface';
+import { AuthServiceProvider } from '../service/auth.service.provider';
+import { AuthServiceInterface } from '../service/auth.service.interface';
 
 export class MyErrorStateMatcher implements MyErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -25,9 +25,9 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   isLoading: boolean = false;
   errorMsg: string = null;
-  auth: AuthInterface;
+  auth: AuthServiceInterface;
 
-  constructor(private router: Router, private authServ: AuthService) {
+  constructor(private router: Router, private authServ: AuthServiceProvider) {
     this.auth = this.authServ.service;
    }
 
@@ -52,7 +52,6 @@ export class RegisterComponent implements OnInit {
 
     this.auth.registerAccount(data).subscribe(
         responseData => {
-        console.log(responseData);
         this.isLoading = false;
         this.router.navigate(['/time']);
       },
@@ -86,7 +85,6 @@ export class RegisterComponent implements OnInit {
     let pass = group.get('password').value;
     let confirm = group.get('confirmPassword').value;
 
-    console.log(pass + ' ' + confirm);
     if(pass === undefined || confirm === undefined) return { notSame: true };
 
     return pass === confirm ? null : { notSame: true } ;

@@ -1,8 +1,8 @@
 import { Report } from '../report.model';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
-import { ReportsInterface } from './reports.interface';
+import { ReportsServiceInterface } from './reports.service.interface';
 
-export class ReportsDebugService implements ReportsInterface {
+export class ReportsNoBackendService implements ReportsServiceInterface {
 
   private fakePreceptorReports: Report[] = [];
   private fakeStudentReports: Report[] = [];

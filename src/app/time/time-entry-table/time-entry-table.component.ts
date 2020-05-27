@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TimeEntryDisplay } from '../model/time-entry.model';
-import { AuthService } from 'src/app/auth/service/auth.service';
-import { TimeService } from '../service/time.service';
+import { AuthServiceProvider } from 'src/app/auth/service/auth.service.provider';
+import { TimeServiceProvider } from '../service/time.service.provider';
 import { Subscription } from 'rxjs';
-import { UserDataStorageService } from 'src/app/shared/service/user-data-storage.service';
+import { UserDataStorageServiceProvider } from 'src/app/shared/service/user-data-storage.service.provider';
 import { UserInfo } from 'src/app/shared/userInfo.model';
-import { TimeServiceInterface } from '../service/time.interface';
+import { TimeServiceInterface } from '../service/time.service.interface';
 
 @Component({
   selector: 'app-time-entry-table',
@@ -26,13 +26,11 @@ export class TimeEntryTableComponent implements OnInit, OnDestroy {
   students: UserInfo[] = [];
   private timeService: TimeServiceInterface;
 
-  constructor(private auth: AuthService, private time: TimeService, private userService: UserDataStorageService) { }
+  constructor(private auth: AuthServiceProvider, private time: TimeServiceProvider, private userService: UserDataStorageServiceProvider) { }
 
   ngOnInit(): void {
-    console.log(this.time.service); 
     this.timeService = this.time.service;
     this.userSub = this.auth.service.userSub.subscribe(user => {
-      console.log(user);
       if(user === null){
         this.isPreceptor = false;
         this.isLearner = false;
@@ -43,7 +41,6 @@ export class TimeEntryTableComponent implements OnInit, OnDestroy {
 
     this.userService.service.getLearners().subscribe(learners => {
       this.students = learners;
-      console.log(this.students);
     }, error => {
         //todo
     });
@@ -86,8 +83,6 @@ export class TimeEntryTableComponent implements OnInit, OnDestroy {
   handleUpdatedEntry(entry: TimeEntryDisplay){
     //this is important, and will close the edit item
     this.selectedEditEntry = null;
-    console.log('handleUpdatedEntry');
-    console.log(entry);
 
     if(entry === null) return;
 
@@ -117,11 +112,9 @@ export class TimeEntryTableComponent implements OnInit, OnDestroy {
         else
         {
           this.isLoading = false;
-          console.log('Todo show error message box here')
         }
       }, error => {
         this.isLoading = false;
-        console.log('Todo show error message box here');
     });
   }
 

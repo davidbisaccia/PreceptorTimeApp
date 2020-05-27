@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthService } from '../auth/service/auth.service';
+import { AuthServiceProvider } from '../auth/service/auth.service.provider';
 import { Subscription } from 'rxjs';
 import { User } from '../auth/user.model';
 
@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isAuthenticated: boolean = false;
   userSub: Subscription;
 
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthServiceProvider) { }
 
   ngOnInit(): void {
     this.userSub = this.auth.service.userSub.subscribe(
@@ -32,8 +32,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this.isTeacher = user.isPreceptor;
           this.allowReports = true;
           this.allowAdmin = user.isAdmin;
-          console.log(user);
-          console.log(user.isAdmin);
         }
       }
     );

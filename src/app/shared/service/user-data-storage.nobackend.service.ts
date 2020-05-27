@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { UserInfo } from '../userInfo.model';
 import { Observable } from 'rxjs';
-import { UserDataStorageInterface } from './user-data-storage.interface';
+import { UserDataStorageServiceInterface } from './user-data-storage.service..interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserDataStorageDebugService implements UserDataStorageInterface {
+export class UserDataStorageNoBackendService implements UserDataStorageServiceInterface {
 
   private fakeData: UserInfo[] = [];
 

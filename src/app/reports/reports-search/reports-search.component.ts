@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { UserDataStorageService } from 'src/app/shared/service/user-data-storage.service';
+import { UserDataStorageServiceProvider } from 'src/app/shared/service/user-data-storage.service.provider';
 import { UserInfo } from 'src/app/shared/userInfo.model';
-import { ReportsService } from '../service/reports.service';
-import { AuthService } from 'src/app/auth/service/auth.service';
-import { ReportsInterface } from '../service/reports.interface';
+import { ReportsServiceProvider } from '../service/reports.service.provider';
+import { AuthServiceProvider } from 'src/app/auth/service/auth.service.provider';
+import { ReportsServiceInterface } from '../service/reports.service.interface';
 
 @Component({
   selector: 'app-reports-search',
@@ -21,9 +21,9 @@ export class ReportsSearchComponent implements OnInit {
   loggedInPreceptorId: number = -1;
   loggedInStudentId: number = -1; 
   isLoading: boolean = true;
-  reportService: ReportsInterface;
+  reportService: ReportsServiceInterface;
 
-  constructor(private userSerivce: UserDataStorageService, private r: ReportsService, private authService: AuthService) { 
+  constructor(private userSerivce: UserDataStorageServiceProvider, private r: ReportsServiceProvider, private authService: AuthServiceProvider) { 
   }
 
   ngOnInit(): void {
@@ -37,7 +37,6 @@ export class ReportsSearchComponent implements OnInit {
     this.userSerivce.service.getPreceptors().subscribe(
       preceptors => {
         this.preceptors = preceptors;
-        console.log(this.preceptors);
         this.checkAndUpdateLoading();
       },
       error => {
@@ -50,7 +49,6 @@ export class ReportsSearchComponent implements OnInit {
     this.reportService.GetAvailableYears().subscribe(
       years => {
         this.years = years;
-        console.log(this.years);
         this.checkAndUpdateLoading();
       }, error => {
         this.errorMsg = error;

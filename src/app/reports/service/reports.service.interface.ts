@@ -1,7 +1,7 @@
 import { Subject, BehaviorSubject, Observable } from 'rxjs';
 import { Report } from '../report.model';
 
-export interface ReportsInterface {
+export interface ReportsServiceInterface {
     currentReports: Subject<Report[]>;
     isLoadingReportData: BehaviorSubject<boolean>;
     

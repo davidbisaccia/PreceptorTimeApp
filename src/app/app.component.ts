@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from './auth/service/auth.service';
+import { AuthServiceProvider } from './auth/service/auth.service.provider';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +10,7 @@ export class AppComponent implements OnInit{
 
   title = 'PreceptorTimeApp';
   
-  constructor(private auth: AuthService){}
+  constructor(private auth: AuthServiceProvider){}
 
   ngOnInit(){
     this.auth.service.autoLogin();
