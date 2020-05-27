@@ -105,7 +105,7 @@ export class TimeNoBackendService implements TimeServiceInterface {
   }
 
   addTimeEntry(entry: TimeEntryDisplay): Observable<number>{
-    let nextId = this.fakeTimeEntries.length + 1;
+    let nextId = this.fakeTimeEntries.map((v, i, arr) => v.id).reduce((a,b) => Math.max(a,b)) + 1;
     entry.id = nextId;
     this.fakeTimeEntries.push(entry);
 
