@@ -5,7 +5,15 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 This project was created to demonstrate skillset in angular.
 
 Skills utilizied:
-- components, services, routing, authentication guards, modules (which are dynamically loaded), directives, angular forms, a setup that loads different services based on the environment settings, etc....
+- components
+- services
+- routing
+- authentication guards
+- modules (which are dynamically loaded)
+- directives
+- angular forms
+- a setup that loads different services based on the environment settings
+- etc...
 
 # Design 
 
