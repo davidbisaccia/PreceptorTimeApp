@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 })
 export class TimeWebApiService implements TimeServiceInterface {
     
-    private controllerPath: string = 'https://localhost:44329/time/';
+    private controllerPath: string = 'https://localhost:44329/api/time/';
 
     constructor(private http: HttpClient){}
 
