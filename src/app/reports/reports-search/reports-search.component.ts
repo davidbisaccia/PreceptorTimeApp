@@ -82,9 +82,18 @@ export class ReportsSearchComponent implements OnInit {
   }
 
   onSearch() {
-    let targetYear = this.reportSearchForm.get('year').value;
-    let targetPreceptor = this.loggedInPreceptorId !== -1 ? this.loggedInPreceptorId : +this.reportSearchForm.get('preceptor').value;
+    let targetYear = +this.reportSearchForm.get('year').value;
+    //TODO: Handle the all value
+    let targetPreceptor = -1;
+    if(this.isAdmin){
+      targetPreceptor =  +this.reportSearchForm.get('preceptor').value;
+    }
+    else if(this.loggedInPreceptorId !== -1){
+      targetPreceptor = this.loggedInPreceptorId;
+    }
 
+    console.log(targetYear + ' ' + targetPreceptor);
+    console.log(this.loggedInStudentId);
     if(this.loggedInStudentId !== -1){
       this.reportService.GetAllReportsForStudent(this.loggedInStudentId, targetYear).subscribe();
     }

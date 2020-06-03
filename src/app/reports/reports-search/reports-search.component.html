@@ -6,7 +6,7 @@
         <div class="form-group mb-3">
             <label class="spacer" for="year">Year</label>
             <select id="year" formControlName="year" class="form-control spacer" [disabled]="isLoading">
-                <option *ngFor="let y of years" value="s">{{y}}</option>
+                <option *ngFor="let y of years" [value]="y">{{y}}</option>
             </select>
         </div>
 
@@ -14,7 +14,7 @@
             <label class="spacer" *ngIf="isAdmin" for="preceptor">Preceptor</label>
             <select *ngIf="isAdmin" id="preceptor" formControlName="preceptor" class="form-control spacer" [disabled]="isLoading">
                 <option selected value="0">{{'All'}}</option>
-                <option *ngFor="let p of preceptors" value="p.id">{{p.displayName}}</option>
+                <option *ngFor="let p of preceptors" [value]="p.id">{{p.displayName}}</option>
             </select>
         </div>
 

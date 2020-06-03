@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { TimeEntryDisplay, TimeEntryDTO } from '../model/time-entry.model';
+import { TimeEntryDisplay } from '../model/time-entry.model';
 import { Observable } from 'rxjs';
 import { TimeServiceInterface } from './time.service.interface';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { TimeEntryDTO } from './dto/time-entry-dto.model';
 
 @Injectable({
   providedIn: 'root'
